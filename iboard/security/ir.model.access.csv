@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+iboard_admin_iboard_board_access,acceso para el constructor de tableros,model_iboard_board,iboard_admin,1,1,1,1
+iboard_admin_iboard_chart_access,acceso para el constructor de tableros,model_iboard_chart,iboard_admin,1,1,1,1

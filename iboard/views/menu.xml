@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="iboard_root" name="Tableros"
+                  web_icon="iboard,static/description/icon.png"
+        />
+
+
+        <menuitem id="iboard_board_action_menu"
+                  name="Tableros"
+                  parent="iboard_root"
+                  action="iboard_board_action"
+                  sequence="1"
+        />
+
+        <menuitem id="iboard_chart_action_menu"
+                  name="Indicadores"
+                  parent="iboard_root"
+                  action="iboard_chart_action"
+                  sequence="10"
+        />
+
+        <record id="iboard_build_action" model="ir.actions.client">
+            <field name="name">Constructor de tableros</field>
+            <field name="tag">iboard_build</field>
+            <field name="target">main</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="iboard_chart_view_form" model="ir.ui.view">
+            <field name="name">iboard_chart_view_form</field>
+            <field name="model">iboard.chart</field>
+            <field name="arch" type="xml">
+                <form string="iboard_chart_form">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="title" class="oe_edit_only"/>
+                            <h1>
+                                <field name="title" placeholder="Nombre del indicador"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="board_id" readonly="1"/>
+                                <field name="chart_type"/>
+                            </group>
+                            <group>
+                                <field name="preview"
+                                       attrs="{'invisible':[('chart_type','=','text')]}"
+                                />
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page name="page_description" string="Descripción">
+                                <field name="description"/>
+                            </page>
+                            <page name="page_chart_config" string="Configuración"
+                                  attrs="{'invisible':[('chart_type','=','text')]}"
+                            >
+                                <group>
+                                    <group>
+                                        <field name="model_id_1"/>
+                                        <field name="model_name_1"
+                                               invisible="1"
+                                        />
+                                        <field name="operation_model_1"/>
+                                        <field name="model_field_1"
+                                               attrs="{'invisible':[('operation_model_1','in',('count',))]}"
+                                        />
+                                        <field name="model_field_group_by_1"
+                                               attrs="{'invisible':[('chart_type','in',('title',))]}"
+                                        />
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="domain_model_1"
+                                           widget="domain"
+                                           context="{'current_id': id}"
+                                           options="{'model': 'model_name_1', 'in_dialog': True}"
+                                    />
+                                </group>
+                            </page>
+                            <page name="page_appearance" string="Estilo">
+                                <group>
+                                    <field name="palette"/>
+                                </group>
+                                <group>
+                                    <field name="config"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="iboard_chart_action" model="ir.actions.act_window">
+            <field name="name">Indicadores</field>
+            <field name="res_model">iboard.chart</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
