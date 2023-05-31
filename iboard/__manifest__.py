@@ -28,10 +28,11 @@
         ],
         'web.assets_qweb': [
             'iboard/static/src/xml/board.xml',
+            'iboard/static/src/xml/title.xml',
 
         ],
         'web.assets_backend': [
-            'iboard/static/src/js/lib/css/title.css',
+            #      'iboard/static/src/js/lib/css/title.css',
             'iboard/static/src/js/board.js',
             'iboard/static/src/js/components/chart_factory.js',
             'iboard/static/src/js/components/base_chart.js',

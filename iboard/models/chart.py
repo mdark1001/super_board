@@ -109,6 +109,26 @@ class iChart(models.Model):
         string='Chart Config',
         required=False
     )
+    set_icon = fields.Boolean(
+        string='Usar ícono',
+        required=False
+    )
+    icon = fields.Char(
+        string='ícono',
+        required=False,
+        default='fa-users'
+    )
+    title_design = fields.Selection(
+        string='Diseño',
+        selection=[
+            ('d0', 'Sin diseño'),
+            ('d1', 'Diseño uno'),
+            ('d2', 'Diseño dos'),
+            ('d3', 'Diseño tres'),
+        ],
+        required=False,
+        default='d0'
+    )
 
     def get_preview_chart_data(self):
         cb = ChartBuilder(self.env)

@@ -2,6 +2,9 @@
 <templates xml:space="preserve">
   <t t-name="iboard.Board" owl="1">
      <div class="grid">
+         <link rel="preconnect" href="https://fonts.googleapis.com"/>
+         <link rel="preconnect" href="https://fonts.gstatic.com"/>
+         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet"/>
          <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
          <t t-foreach="state.charts" t-as="chart">
                 <ChartFactory
@@ -28,15 +31,6 @@
         </div>
     </t>
 
-    <t t-name="iboard.Title" owl="1">
-        <div class="indicator-card">
-  <h2 class="indicator-card-title">Título del indicador</h2>
-            <div class="indicator-card-icon">
-    <i class="fa fa-icon"></i> <!-- Reemplaza "fa-icon" con la clase del icono que desees usar, como FontAwesome -->
-  </div>
-            <div class="indicator-card-number">123</div>
-</div>
 
-    </t>
 
 </templates>

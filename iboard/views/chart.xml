@@ -59,6 +59,13 @@
                             <page name="page_appearance" string="Estilo">
                                 <group>
                                     <field name="palette"/>
+                                    <field name="set_icon"/>
+                                    <field name="icon"
+                                           attrs="{'invisible':[('set_icon','=',False)]}"
+                                    />
+                                    <field name="title_design"
+                                           attrs="{'invisible':[('chart_type','!=','title')]}"
+                                    />
                                 </group>
                                 <group>
                                     <field name="config"/>

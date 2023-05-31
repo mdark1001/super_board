@@ -4,7 +4,7 @@
 @name: 
 """
 from odoo import api, fields, models
-from odoo.addons.iboard.models.helper import validate_record
+from .helper import validate_record
 
 
 class iBoard(models.Model):
@@ -46,6 +46,7 @@ class iBoard(models.Model):
                 'id', 'title',
                 'chart_type', 'description',
                 'preview', 'palette', 'config',
+                'set_icon', 'icon', 'title_design',
             ))
         ]
         return board.jsonify(one=True, parser=data)

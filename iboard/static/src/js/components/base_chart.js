@@ -62,6 +62,23 @@ export function iboarColors(palette) {
     return colorsPalette
 }
 
+export function iboardColorsTitle(palette) {
+    let colorsPalette = [
+        "#00B0A7",
+        "#68548D",
+        "#3B8D79",
+        "#98B0A9",
+        "#95B65B",
+        "#B4F8C8",
+        "#A0E7E5",
+        "#FFAEBC",
+    ];
+    if (!palette)
+        return 'white'
+    let colorIndex = parseInt(palette.substr(-1))
+    return colorsPalette[colorIndex]
+}
+
 const {useExternalListener} = owl.hooks;
 
 export class iboardBaseChart extends Component {
