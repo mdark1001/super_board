@@ -64,14 +64,14 @@ export function iboarColors(palette) {
 
 export function iboardColorsTitle(palette) {
     let colorsPalette = [
-        "#00B0A7",
-        "#68548D",
-        "#3B8D79",
-        "#98B0A9",
-        "#95B65B",
-        "#B4F8C8",
+        "#714B67",
+        "#A55E74",
+        "#D47773",
+        "#F59A6B",
+        "#A57C9A",
+        "#FFE5FF",
         "#A0E7E5",
-        "#FFAEBC",
+        "#00C89C",
     ];
     if (!palette)
         return 'white'
