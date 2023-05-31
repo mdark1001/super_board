@@ -14,6 +14,7 @@ export class iboardTitle extends iboardBaseChart {
         if (this.props.chart.title_design === 'd0')
             this.props.chart.palette = undefined
         this.colors = iboardColorsTitle(this.props.chart?.palette)
+        // todo agregar icons
     }
 
     async willStart() {

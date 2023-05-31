@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
   <t t-name="iboard.Board" owl="1">
-     <div class="grid">
+      <div class="grid">
+       <div class="o_control_panel">
+          <div id="">
+                        <span id="ks_dashboard_title_label" class="ks_am_element">
+                            <t t-esc="state.boardName"/>
+                        </span>
+          </div>
+       </div>
+          <div class="iboard-body">
          <link rel="preconnect" href="https://fonts.googleapis.com"/>
-         <link rel="preconnect" href="https://fonts.gstatic.com"/>
-         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap" rel="stylesheet"/>
-         <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
-         <t t-foreach="state.charts" t-as="chart">
+              <link rel="preconnect" href="https://fonts.gstatic.com"/>
+              <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap"
+                    rel="stylesheet"/>
+              <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
+              <t t-foreach="state.charts" t-as="chart">
                 <ChartFactory
                         t-key="chart.id"
                         chart="chart"
@@ -14,23 +23,25 @@
                 />
              </t>
         </div>
+      </div>
   </t>
     <t t-name="iboard.ChartFactory" owl="1">
-        <t t-component="getChart"
-           t-props="props"
-        />
-    </t>
+<t t-component="getChart"
+   t-props="props"
+/>
+</t>
 
     <t t-name="iboard.BaseChart" owl="1">
-        <div class="">
-             <div>
-                  <b><t t-esc="props.chart.title"/></b>
-                 <canvas width="400" height="100"
-                         t-attf-id="chart_{{ props.chart.id }}"/>
-             </div>
-        </div>
-    </t>
+<div class="">
+    <div>
+        <b>
+            <t t-esc="props.chart.title"/>
+        </b>
+        <canvas width="400" height="100"
+                t-attf-id="chart_{{ props.chart.id }}"/>
+    </div>
+</div>
+</t>
 
 
-
-</templates>
+        </templates>
