@@ -13,9 +13,26 @@ const {Component, useState, core, hooks} = owl;
 const {EventBus} = core;
 const {useRef, useExternalListener} = hooks;
 
+function useMouse(state) {
+    const grid = GridStack.init()
+
+    grid.on('resizestop', function (event, el) {
+        console.log(event);
+        console.log(el);
+        let charID = event.target.dataset.id;
+
+    });
+    /*
+        onWillDestroy(() => {
+            window.removeEventListener('mousemove', update);
+        });
+    */
+
+    return grid;
+}
 
 class Board extends Component {
-    async setup() {
+    setup() {
         super.setup();
 
         let boardID = 1 // this.props.action.params?.board_id || this.props.action.params?.active_id
@@ -27,23 +44,25 @@ class Board extends Component {
         this.orm = useService('orm')
         this.assets = {
             jsLibs: [
-                '/iboard/static/src/js/lib/js/Chart.bundle.min.js',
-                '/iboard/static/src/js/lib/js/pdfmake.min.js',
-                '/iboard/static/src/js/lib/js/vfs_fonts.js',
+                "https://d3js.org/d3.v7.min.js",
+                // "/iboard/static/src/js/libs/node_modules/gridstack/dist/es5/gridstack-all.js",
             ],
-            cssLibs: [],
+            cssLibs: [
+                //"/iboard/static/src/js/libs/node_modules/gridstack/dist/gridstack.min.css",
+            ],
         };
-        await loadAssets(this.assets);
 
 
     }
 
     async willStart() {
         super.willStart();
+        await loadAssets(this.assets);
         let charts = await this.callGetChartsFromDashboard();
         console.log(charts);
         this.state.boardName = charts.name
         this.state.charts = charts.chart_ids
+        this.grid = false;
     }
 
     mounted() {
@@ -53,15 +72,14 @@ class Board extends Component {
     }
 
     startGrid() {
-        //console.log(this);
         setTimeout(() => {
-       //         GridStack.init()
+              //  this.mouse = useMouse(this.state)
             }, 1000
         )
 
     }
 
-    _onResize(event,ui) {
+    _onResize(event, ui) {
         console.log(event);
     }
 

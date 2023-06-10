@@ -7,6 +7,7 @@ import json
 import logging
 from json import JSONDecodeError
 
+from odoo.addons.iboard.libs.chart_pie import ChartPie
 from odoo.addons.iboard.libs.chart_title import Title
 from odoo.tools.convert import safe_eval
 
@@ -29,6 +30,8 @@ class ChartBuilder:
             self.chart_ob = Title(self)
         elif self.chart.chart_type == 'bars':
             pass
+        elif self.chart.chart_type == 'pie':
+            self.chart_ob = ChartPie(self)
 
     def get_data(self):
         if not self.chart:
@@ -39,48 +42,6 @@ class ChartBuilder:
 
     def to_json(self):
         return json.dumps(self._data)
-
-    def get_data_counter(self):
-
-        Model = self.env[self.chart.model_name_1]
-        field_name = self.chart.model_field_group_by_1.name
-        if self.chart.model_field_1.ttype == 'many2many':
-            pass
-        results = Model.read_group(
-            domain=self.get_domain(),
-            fields=[field_name],
-            groupby=[field_name],
-            lazy=True
-        )
-        self._logger.info(results)
-        if self.chart.model_field_group_by_1.ttype == 'selection':
-            options = self.get_values_selection(
-                Model,
-                field_name
-            )
-            results = {option[field_name]: option[field_name + '_count'] for option in results}
-            self._logger.info(results)
-            self._data['labels'] = [label[1] for label in options]
-            self._data['datasets'] = [{
-                'label': self.chart.model_field_group_by_1.field_description,
-                'data': [
-                    results.get(label[0], 0) for label in options
-                ]
-            }]
-        if self.chart.model_field_group_by_1.ttype == 'many2one':
-            labels = []
-            for item in results:
-                if item[field_name]:
-                    labels.append(str(item[field_name][1]))
-                else:
-                    labels.append('Sin asignar')
-            data = [item[field_name + '_count'] for item in results]
-            self._logger.info(results)
-            self._data['labels'] = labels
-            self._data['datasets'] = [{
-                'label': self.chart.model_field_group_by_1.field_description,
-                'data': data
-            }]
 
     def get_domain(self):
         _filter = []
@@ -108,3 +69,6 @@ class ChartBuilder:
         # print(request.env.user.lang)
         return self.env['ir.translation'].with_context(lang=self.env.user.lang).get_field_selection(model._name,
                                                                                                     field)
+
+    def getModel(self):
+        return self.env[self.chart.model_name_1]

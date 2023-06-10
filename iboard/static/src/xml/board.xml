@@ -2,43 +2,139 @@
 <templates xml:space="preserve">
   <t t-name="iboard.Board" owl="1">
       <div class="grid">
-       <div class="o_control_panel">
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+          <link rel="preconnect" href="https://fonts.gstatic.com"/>
+          <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap"
+                rel="stylesheet"/>
+          <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
+          <div class="o_control_panel">
           <div id="">
                         <span id="ks_dashboard_title_label" class="ks_am_element">
                             <t t-esc="state.boardName"/>
                         </span>
+
           </div>
        </div>
-          <div class="iboard-body">
-         <link rel="preconnect" href="https://fonts.googleapis.com"/>
-              <link rel="preconnect" href="https://fonts.gstatic.com"/>
-              <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap"
-                    rel="stylesheet"/>
-              <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
+          <div class="iboard-body grid-stack">
+
               <t t-foreach="state.charts" t-as="chart">
                 <ChartFactory
                         t-key="chart.id"
                         chart="chart"
                         google="google"
+
                 />
              </t>
         </div>
       </div>
   </t>
     <t t-name="iboard.ChartFactory" owl="1">
-<t t-component="getChart"
-   t-props="props"
-/>
+    <t t-component="getChart"
+       t-props="props"
+    />
 </t>
 
     <t t-name="iboard.BaseChart" owl="1">
-<div class="">
-    <div>
-        <b>
-            <t t-esc="props.chart.title"/>
-        </b>
-        <canvas width="400" height="100"
-                t-attf-id="chart_{{ props.chart.id }}"/>
+        <div class="o_kanban_view o_kanban_ungrouped iboard_kanban">
+        <div class="oe_kanban_card oe_kanban_global_click o_kanban_record "
+             t-attf-style="max-width: {{ chartConfig.width }};
+              max-height: {{ chartConfig.height }};">
+                <h4 class="o_kanban_record_title p-0 indicator-card-title">                                    <span>
+                    <t t-esc="props.chart.title"/></span></h4>
+            <div class="row">
+                <div class="col-12 ml-1" t-attf-id="chart_body_{{props.chart.id}}">
+                </div>
+                   <div class="col-12">
+                            <svg t-attf-id="chart_{{ props.chart.id }}"/>
+                   </div>
+            </div>
+        </div>
+        </div>
+    </t>
+
+    <t t-name="iboard.MenuContainer" owl="1">
+<div class="o_dropdown_kanban dropdown" modifiers="{}">
+
+    <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+       data-display="static" href="#" aria-label="Menú desplegable" title="Menú desplegable"
+       modifiers="{}">
+        <span class="fa fa-ellipsis-v" modifiers="{}"></span>
+    </a>
+    <div class="dropdown-menu" role="menu" modifiers="{}">
+        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+           modifiers="{}" data-type="edit" href="#">Editar encuesta
+        </a>
+        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+           modifiers="{}" data-type="object" data-name="action_send_survey"
+           href="#">Compartir
+        </a>
+        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+           modifiers="{}" data-type="delete" href="#">Eliminar
+        </a>
+        <div role="separator" class="dropdown-divider" modifiers="{}"></div>
+        <div role="separator" class="dropdown-item-text" modifiers="{}">Color</div>
+        <ul class="oe_kanban_colorpicker" data-field="color" modifiers="{}">
+
+            <li>
+                <a role="menuitem" href="#" data-color="0" class="oe_kanban_color_0" title="No color"
+                   aria-label="No color"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="1" class="oe_kanban_color_1" title="Red" aria-label="Red"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="2" class="oe_kanban_color_2" title="Orange"
+                   aria-label="Orange"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="3" class="oe_kanban_color_3" title="Yellow"
+                   aria-label="Yellow"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="4" class="oe_kanban_color_4" title="Light blue"
+                   aria-label="Light blue"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="5" class="oe_kanban_color_5" title="Dark purple"
+                   aria-label="Dark purple"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="6" class="oe_kanban_color_6" title="Salmon pink"
+                   aria-label="Salmon pink"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="7" class="oe_kanban_color_7" title="Medium blue"
+                   aria-label="Medium blue"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="8" class="oe_kanban_color_8" title="Dark blue"
+                   aria-label="Dark blue"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="9" class="oe_kanban_color_9" title="Fushia"
+                   aria-label="Fushia"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="10" class="oe_kanban_color_10" title="Green"
+                   aria-label="Green"></a>
+            </li>
+
+            <li>
+                <a role="menuitem" href="#" data-color="11" class="oe_kanban_color_11" title="Purple"
+                   aria-label="Purple"></a>
+            </li>
+
+        </ul>
     </div>
 </div>
 </t>

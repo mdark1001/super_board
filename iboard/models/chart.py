@@ -138,13 +138,19 @@ class iChart(models.Model):
 
     @api.model
     def create(self, values):
-        values['config'] = self.get_default_config()
+        values['config'] = self.get_default_config(values.get('chart_type'))
         return super(iChart, self).create(values)
 
     @staticmethod
-    def get_default_config():
+    def get_default_config(chart_type):
         data = {
             'width': '250px',
             'height': '250px',
         }
+        if chart_type in ['bars', 'pie']:
+            data.update({
+                'width': '450px',
+                'height': '450px',
+                'filter_empty': True
+            })
         return json.dumps(data)

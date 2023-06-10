@@ -74,7 +74,7 @@ export function iboardColorsTitle(palette) {
         "#00C89C",
     ];
     if (!palette)
-        return 'white'
+        return '#C9CCD2'
     let colorIndex = parseInt(palette.substr(-1))
     return colorsPalette[colorIndex]
 }
@@ -93,6 +93,8 @@ export class iboardBaseChart extends Component {
         this.chartConfig = JSON.parse(
             this.props.chart.config
         )
+        console.log(this.chartConfig);
+        useExternalListener(window, "resizestop", this._onResize);
 
     }
 
@@ -100,17 +102,7 @@ export class iboardBaseChart extends Component {
         this.data = JSON.parse(
             this.props.chart.preview
         )
-        this.data.datasets[0].backgroundColor = this.colors;
-        this.config = {
-            type: this.chartType,
-            data: this.data,
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                },
-            }
-        };
+
     }
 
     mounted() {
@@ -118,9 +110,30 @@ export class iboardBaseChart extends Component {
 
     }
 
+    getResize(event) {
+        console.log(event);
+    }
+
     _onResize(event, ui) {
         console.log(event);
     }
+
+    getWidth() {
+        return parseInt(this.chartConfig.width) * .5
+    }
+
+    getHeight() {
+        return parseInt(this.chartConfig.height) * .5
+    }
+
+    getDataChart() {
+        let d = this.data.datasets;
+        if (this.chartConfig.filter_empty) {
+            d = d.filter(d => d.value > 0)
+        }
+        return d
+    }
+
 }
 
 iboardBaseChart.template = 'iboard.BaseChart'

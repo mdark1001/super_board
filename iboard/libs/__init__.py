@@ -6,3 +6,4 @@
 from . import response
 from . import chart_base
 from . import chart_title
+from . import chart_pie

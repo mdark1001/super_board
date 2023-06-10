@@ -15,11 +15,13 @@ export class iboardTitle extends iboardBaseChart {
             this.props.chart.palette = undefined
         this.colors = iboardColorsTitle(this.props.chart?.palette)
         // todo agregar icons
+        console.log(this.colors);
+
     }
 
     async willStart() {
         super.willStart();
-        // this.setChartConfiguration()
+        this.setChartConfiguration()
     }
 
     mounted() {
@@ -27,6 +29,10 @@ export class iboardTitle extends iboardBaseChart {
         this.chartID = 'chart_' + this.props.chart.id
     }
 
+    getResize(event) {
+        console.log(event);
+    }
+
 }
 
-iboardTitle.template = 'iboard.Title'
+iboardTitle.template = 'iboard.Title2'
