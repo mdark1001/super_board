@@ -2,6 +2,7 @@
 
 
 import {iboarColors, iboardBaseChart} from "./base_chart";
+import {useBus, useService} from "@web/core/utils/hooks";
 
 export class iboardPieChart extends iboardBaseChart {
     chartType = 'doughnut'
@@ -14,22 +15,32 @@ export class iboardPieChart extends iboardBaseChart {
 
     async willStart() {
         super.willStart();
-        this.setChartConfiguration()
     }
 
     mounted() {
         super.mounted();
         this.chartID = 'chart_' + this.props.chart.id
-        // Sample data
+        this.draw()
 
+    }
+
+    redrawSize(w, h) {
+        this.props.chart.config.width = w;
+        this.props.chart.config.height = h;
+        d3.select("#" + this.chartID).html("");
+        d3.select("div#chart_body_" + this.props.chart.id).html("")
+        this.draw()
+    }
+
+    draw() {
         // Dimensions and settings
         var width = this.getWidth();
         var height = this.getHeight();
-        var radius = Math.min(width, height) / 3;
+        var radius = Math.min(width, height) /2;
         var color = iboarColors(this.props.chart.palette)
 
         // Create the SVG element
-        var svg = d3.select("#" + this.chartID)
+        let svg = d3.select("#" + this.chartID)
             .attr("width", width)
             .attr("height", height)
             .append("g")
@@ -85,6 +96,10 @@ export class iboardPieChart extends iboardBaseChart {
             .text(function (d) {
                 return "(" + d.value + ")";
             });
+    }
+
+    catchResize(event) {
+        console.log(event);
     }
 
 }

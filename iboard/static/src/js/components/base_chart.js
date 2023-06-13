@@ -1,7 +1,9 @@
 /** @odoo-module **/
 
 
+
 const {Component} = owl;
+const {EventBus} = owl.core;
 
 export function iboarColors(palette) {
     let currentPalette = "oohel_4";
@@ -90,18 +92,7 @@ export class iboardBaseChart extends Component {
         super.setup();
         this.chartID = 'chart_' + this.props.chart.id
         this.colors = iboarColors(this.props.chart?.palette)
-        this.chartConfig = JSON.parse(
-            this.props.chart.config
-        )
-        console.log(this.chartConfig);
         useExternalListener(window, "resizestop", this._onResize);
-
-    }
-
-    setChartConfiguration() {
-        this.data = JSON.parse(
-            this.props.chart.preview
-        )
 
     }
 
@@ -119,16 +110,16 @@ export class iboardBaseChart extends Component {
     }
 
     getWidth() {
-        return parseInt(this.chartConfig.width) * .5
+        return parseInt(this.props.chart.config.width) * .8
     }
 
     getHeight() {
-        return parseInt(this.chartConfig.height) * .5
+        return parseInt(this.props.chart.config.height) *.8
     }
 
     getDataChart() {
-        let d = this.data.datasets;
-        if (this.chartConfig.filter_empty) {
+        let d = this.props.chart.data.datasets;
+        if (this.props.chart.config.filter_empty) {
             d = d.filter(d => d.value > 0)
         }
         return d
@@ -137,3 +128,4 @@ export class iboardBaseChart extends Component {
 }
 
 iboardBaseChart.template = 'iboard.BaseChart'
+iboardBaseChart.bus = new EventBus()

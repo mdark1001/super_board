@@ -8,34 +8,15 @@ import {useBus, useService} from "@web/core/utils/hooks";
 import {loadAssets} from "@web/core/assets";
 import {ChartFactory} from "./components/chart_factory";
 
-const {Component, useState, core, hooks} = owl;
 
+
+const {Component, useState, core, hooks, reactive} = owl;
 const {EventBus} = core;
-const {useRef, useExternalListener} = hooks;
-
-function useMouse(state) {
-    const grid = GridStack.init()
-
-    grid.on('resizestop', function (event, el) {
-        console.log(event);
-        console.log(el);
-        let charID = event.target.dataset.id;
-
-    });
-    /*
-        onWillDestroy(() => {
-            window.removeEventListener('mousemove', update);
-        });
-    */
-
-    return grid;
-}
 
 class Board extends Component {
-    setup() {
+    async setup() {
         super.setup();
-
-        let boardID = 1 // this.props.action.params?.board_id || this.props.action.params?.active_id
+        let boardID = 2 // this.props.action.params?.board_id || this.props.action.params?.active_id
         this.state = useState({
             'boardID': boardID,
             'charts': [],
@@ -45,42 +26,44 @@ class Board extends Component {
         this.assets = {
             jsLibs: [
                 "https://d3js.org/d3.v7.min.js",
-                // "/iboard/static/src/js/libs/node_modules/gridstack/dist/es5/gridstack-all.js",
+                "/iboard/static/src/js/node_modules/gridstack/dist/es5/gridstack-all.js",
             ],
             cssLibs: [
-                //"/iboard/static/src/js/libs/node_modules/gridstack/dist/gridstack.min.css",
+                "/iboard/static/src/js/node_modules/gridstack/dist/gridstack.min.css",
+                "/iboard/static/src/css/dashboard_gridstack.css",
             ],
         };
-
-
+        await loadAssets(this.assets);
+        this.charts = hooks.useRef('chart')
     }
 
     async willStart() {
-        super.willStart();
-        await loadAssets(this.assets);
+        await super.willStart();
         let charts = await this.callGetChartsFromDashboard();
         console.log(charts);
         this.state.boardName = charts.name
         this.state.charts = charts.chart_ids
-        this.grid = false;
     }
 
     mounted() {
         super.mounted();
-        //GridStack.init()
         this.startGrid()
     }
 
     startGrid() {
-        setTimeout(() => {
-              //  this.mouse = useMouse(this.state)
-            }, 1000
-        )
+        this.grid = GridStack.init()
+        this.grid.on('resizestop', (e, u) => {
+            let chartID = parseInt(e.target.id);
+            let index = this.state.charts.findIndex(item => item.id === chartID)
+            let width = u.gridstackNode.el.offsetWidth;
+            let height = u.gridstackNode.el.offsetHeight;
+            this.state.charts[index].config.width = width + 'px';
+            this.state.charts[index].config.width = height + 'px';
+            let id = Object.keys(this.charts.comp.__owl__.children)
+            console.log( this.charts.comp.__owl__.children[id[0]]);
+            this.charts.comp.__owl__.children[id[0]].redrawSize(width,height)
 
-    }
-
-    _onResize(event, ui) {
-        console.log(event);
+        })
     }
 
     callGetChartsFromDashboard() {
@@ -91,7 +74,14 @@ class Board extends Component {
             {
                 'board_id': this.state.boardID,
             }
-        )
+        ).then(res => {
+            console.log(res);
+            for (let item in res.chart_ids) {
+                res.chart_ids[item].data = JSON.parse(res.chart_ids[item].preview)
+                res.chart_ids[item].config = JSON.parse(res.chart_ids[item].config)
+            }
+            return res
+        })
     }
 }
 
@@ -100,5 +90,8 @@ Board.template = 'iboard.Board'
 Board.components = {
     ChartFactory
 }
+
+//
+
 
 registry.category("actions").add("iboard_build", Board);

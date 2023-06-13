@@ -10,7 +10,6 @@ export class iboardTitle extends iboardBaseChart {
         super.setup();
         console.log(this.props);
         this.chartID = 'chart_' + this.props.chart.id
-        this.data = JSON.parse(this.props.chart.preview)
         if (this.props.chart.title_design === 'd0')
             this.props.chart.palette = undefined
         this.colors = iboardColorsTitle(this.props.chart?.palette)
@@ -21,7 +20,6 @@ export class iboardTitle extends iboardBaseChart {
 
     async willStart() {
         super.willStart();
-        this.setChartConfiguration()
     }
 
     mounted() {

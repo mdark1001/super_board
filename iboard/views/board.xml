@@ -31,6 +31,7 @@
                                     <field name="chart_ids" nolabel="1" context="{'default_board_id':id}">
                                         <tree>
                                             <field name="board_id" invisible="1"/>
+                                            <field name="orden" widget="handle"/>
                                             <field name="title"/>
                                             <field name="chart_type"/>
                                         </tree>

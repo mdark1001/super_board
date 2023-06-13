@@ -8,10 +8,10 @@ import {iboardTitle} from "./title_chart";
 const {Component} = owl;
 
 export class ChartFactory extends Component {
-
+    ChartMAp = {}
     setup() {
         super.setup();
-        console.log(this.props);
+
     }
 
     get getChart() {

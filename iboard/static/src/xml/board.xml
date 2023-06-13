@@ -22,7 +22,7 @@
                         t-key="chart.id"
                         chart="chart"
                         google="google"
-
+                        t-ref="chart"
                 />
              </t>
         </div>
@@ -35,10 +35,11 @@
 </t>
 
     <t t-name="iboard.BaseChart" owl="1">
-        <div class="o_kanban_view o_kanban_ungrouped iboard_kanban">
+      <div class="grid-stack-item" t-att-gs-min-h="props.chart.config.gsMinHeight" t-att-gs-min-w="props.chart.config.gsMinWidth"
+        t-att-id="props.chart.id">
+        <div class="o_kanban_view o_kanban_ungrouped iboard_kanban grid-stack-item-content">
         <div class="oe_kanban_card oe_kanban_global_click o_kanban_record "
-             t-attf-style="max-width: {{ chartConfig.width }};
-              max-height: {{ chartConfig.height }};">
+            >
                 <h4 class="o_kanban_record_title p-0 indicator-card-title">                                    <span>
                     <t t-esc="props.chart.title"/></span></h4>
             <div class="row">
@@ -48,6 +49,7 @@
                             <svg t-attf-id="chart_{{ props.chart.id }}"/>
                    </div>
             </div>
+        </div>
         </div>
         </div>
     </t>

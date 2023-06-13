@@ -14,10 +14,15 @@ class iChart(models.Model):
     _name = 'iboard.chart'
     _description = 'iBoard/Indicador'
     _rec_name = 'title'
+    _order = 'orden ASC'
 
     title = fields.Char(
         string='Título',
         required=True
+    )
+    orden = fields.Integer(
+        string='Orden',
+        default=1
     )
 
     board_id = fields.Many2one(
@@ -146,11 +151,15 @@ class iChart(models.Model):
         data = {
             'width': '250px',
             'height': '250px',
+            'gsMinWidth': 2,
+            'gsMinHeight': 1,
         }
         if chart_type in ['bars', 'pie']:
             data.update({
                 'width': '450px',
                 'height': '450px',
-                'filter_empty': True
+                'filter_empty': True,
+                'gsMinWidth': 4,
+                'gsMinHeight': 6
             })
         return json.dumps(data)

@@ -3,12 +3,14 @@
 }
 
 div.iboard-body {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    min-height: 150%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: right;
+    flex-flow: column wrap;
+    overflow-y: auto;
 }
-
 .indicator-card {
     border-left-width: 3px !important;
 }
@@ -17,7 +19,9 @@ div.iboard_kanban {
     display: inline-flex !important;
     padding: 0 !important;
 }
-
+.o_kanban_view.o_kanban_ungrouped{
+    min-height: fit-content;
+}
 
 .indicator-body {
     font-family: 'Open Sans', sans-serif;
@@ -65,3 +69,4 @@ div.iboard_kanban {
 .chart-legend {
     display: flex;
 }
+
