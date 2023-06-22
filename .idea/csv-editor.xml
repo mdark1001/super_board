@@ -31,7 +31,35 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../apac15/izi_data/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../apac15/jsonifier/demo/ir.exports.line.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../apac15/oohel_export_beneficiarios/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../apac15/survey_backend/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../enterprise/addons/account_avatax/data/product.avatax.category.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -45,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../enterprise/addons/hr_contract_sign/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../enterprise/addons/product_unspsc/data/product.unspsc.code.csv">
           <value>
             <Attribute>
@@ -52,7 +87,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../enterprise/addons/sign/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../odoo/addons/account/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../odoo/addons/auth_totp/security/ir.model.access.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -206,6 +255,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../odoo/addons/phone_validation/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../odoo/addons/point_of_sale/security/ir.model.access.csv">
           <value>
             <Attribute>
@@ -214,6 +270,13 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../../odoo/addons/portal/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../odoo/addons/pos_cache/security/ir.model.access.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -262,6 +325,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../odoo/addons/website_crm_partner_assign/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../odoo/addons/website_sale/security/ir.model.access.csv">
           <value>
             <Attribute>
@@ -298,6 +368,13 @@
           </value>
         </entry>
         <entry key="/iboard/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/jsonifier/demo/ir.exports.line.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

@@ -16,7 +16,9 @@
                         </div>
                         <group>
                             <group>
-                                <field name="board_id" readonly="1"/>
+                                <field name="board_id" readonly="0"
+                                       options="{'no_create':True,'no_create_edit':True}"
+                                />
                                 <field name="chart_type"/>
                             </group>
                             <group>

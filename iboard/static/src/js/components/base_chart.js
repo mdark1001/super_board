@@ -3,7 +3,9 @@
 
 
 const {Component} = owl;
+const {onWillUpdateProps} = owl.hooks
 const {EventBus} = owl.core;
+import config from 'web.config';
 
 export function iboarColors(palette) {
     let currentPalette = "oohel_4";
@@ -93,11 +95,29 @@ export class iboardBaseChart extends Component {
         this.chartID = 'chart_' + this.props.chart.id
         this.colors = iboarColors(this.props.chart?.palette)
         useExternalListener(window, "resizestop", this._onResize);
-
+        this.factorDeviceSize = .8
+        onWillUpdateProps(nextProps => {
+            this.redrawSize()
+        });
     }
 
     mounted() {
         super.mounted();
+
+    }
+
+    setFactorDeviceSize() {
+
+
+    }
+
+    redrawSize(w, h) {
+        d3.select("#" + this.chartID).html("");
+        d3.select("div#chart_body_" + this.props.chart.id).html("")
+        this.draw()
+    }
+
+    draw() {
 
     }
 
@@ -110,11 +130,11 @@ export class iboardBaseChart extends Component {
     }
 
     getWidth() {
-        return parseInt(this.props.chart.config.width) * .8
+        return parseInt(this.props.chart.config.width) * this.factorDeviceSize
     }
 
     getHeight() {
-        return parseInt(this.props.chart.config.height) *.8
+        return parseInt(this.props.chart.config.height) * this.factorDeviceSize
     }
 
     getDataChart() {

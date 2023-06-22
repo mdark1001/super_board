@@ -5,11 +5,10 @@
 div.iboard-body {
     box-sizing: border-box;
     width: 100%;
-    height: auto;
-    min-height: 150%;
+    height: 100vh; /*By Gera*/
     display: flex;
     flex-flow: column wrap;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .indicator-card {
     border-left-width: 3px !important;

@@ -1,5 +1,5 @@
 """
-@author: Miguel Cabrera R. <miguel.cbarera@oohel.net>
+@author: Miguel Cabrera R. <miguel.cabrera@oohel.net>
 @date: 5/15/23
 @name:
 """
@@ -144,14 +144,26 @@ class iChart(models.Model):
     @api.model
     def create(self, values):
         values['config'] = self.get_default_config(values.get('chart_type'))
-        return super(iChart, self).create(values)
+
+        result = super(iChart, self).create(values)
+
+        layout = json.loads(result.board_id.layout or [])
+        layout[result.id] = {
+            'x': 0,
+            'y': 0,
+            'id': result.id
+        }
+        result.board_id.write({
+            'layout': json.dumps(layout)
+        })
+        return result
 
     @staticmethod
     def get_default_config(chart_type):
         data = {
             'width': '250px',
             'height': '250px',
-            'gsMinWidth': 2,
+            'gsMinWidth': 3,
             'gsMinHeight': 1,
         }
         if chart_type in ['bars', 'pie']:
@@ -159,7 +171,7 @@ class iChart(models.Model):
                 'width': '450px',
                 'height': '450px',
                 'filter_empty': True,
-                'gsMinWidth': 4,
-                'gsMinHeight': 6
+                'gsMinWidth': 3,
+                'gsMinHeight': 3
             })
         return json.dumps(data)

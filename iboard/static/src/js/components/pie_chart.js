@@ -21,30 +21,22 @@ export class iboardPieChart extends iboardBaseChart {
         super.mounted();
         this.chartID = 'chart_' + this.props.chart.id
         this.draw()
-
     }
 
-    redrawSize(w, h) {
-        this.props.chart.config.width = w;
-        this.props.chart.config.height = h;
-        d3.select("#" + this.chartID).html("");
-        d3.select("div#chart_body_" + this.props.chart.id).html("")
-        this.draw()
-    }
 
     draw() {
         // Dimensions and settings
+        super.draw();
         var width = this.getWidth();
         var height = this.getHeight();
-        var radius = Math.min(width, height) /2;
+        var radius = Math.min(width, height) / 2;
         var color = iboarColors(this.props.chart.palette)
-
         // Create the SVG element
         let svg = d3.select("#" + this.chartID)
-            .attr("width", width)
-            .attr("height", height)
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 600 400")
             .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .attr("transform", "translate(" + (width - 50 )+ "," + height / 2 + ")");
 
         // Generate the arcs
         var arc = d3.arc()

@@ -1,5 +1,5 @@
 """
-@author: Miguel Cabrera R. <miguel.cbarera@oohel.net>
+@author: Miguel Cabrera R. <miguel.cabrera@oohel.net>
 @date: 5/26/23
 @name: 
 """

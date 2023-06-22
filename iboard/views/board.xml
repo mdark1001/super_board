@@ -38,6 +38,11 @@
                                     </field>
                                 </group>
                             </page>
+                            <page name="page_config" string="Configuración">
+                                <group>
+                                    <field name="layout"/>
+                                </group>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>

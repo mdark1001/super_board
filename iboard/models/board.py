@@ -3,6 +3,8 @@
 @date: 2/21/23
 @name: 
 """
+import json
+
 from odoo import api, fields, models
 from .helper import validate_record
 
@@ -24,6 +26,11 @@ class iBoard(models.Model):
         string='Indicadores',
         required=False
     )
+    layout = fields.Text(
+        string="Layout",
+        required=False,
+        default="[]"
+    )
 
     def action_show_board(self):
         self.ensure_one()
@@ -41,7 +48,7 @@ class iBoard(models.Model):
     def get_charts(self, *args, **kwargs):
         board = kwargs.get('instance')
         data = [
-            'id', 'name',
+            'id', 'name', 'layout',
             ('chart_ids', (
                 'id', 'title',
                 'chart_type', 'description',
@@ -50,3 +57,18 @@ class iBoard(models.Model):
             ))
         ]
         return board.jsonify(one=True, parser=data)
+
+    @api.model
+    @validate_record(model='iboard.board', key='board_id')
+    def save_layout(self, *args, **kwargs):
+        board = kwargs.get('instance')
+        board.write({
+            'layout': kwargs.get('layout')
+        })
+        charts_config = json.loads(kwargs.get('charts_config'))
+        Chart = self.env['iboard.chart']
+        for item in charts_config:
+            Chart.browse(item['chartID']).write({
+                'config': json.dumps(item['config'])
+            })
+        return {"state": "ok"}

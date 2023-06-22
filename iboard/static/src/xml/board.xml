@@ -7,24 +7,30 @@
           <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap"
                 rel="stylesheet"/>
           <link href="/iboard/static/src/css/board.css" rel="stylesheet"/>
+          <link href="/iboard/static/src/css/dashboard_gridstack.css" rel="stylesheet"/>
+
           <div class="o_control_panel">
-          <div id="">
+              <div class="row">
+          <div class="col-12">
                         <span id="ks_dashboard_title_label" class="ks_am_element">
                             <t t-esc="state.boardName"/>
                         </span>
-
+              <t t-call="iboard.BoardHeaderOptions"/>
+              </div>
           </div>
        </div>
-          <div class="iboard-body grid-stack">
+          <div class="iboard-body">
+              <div class="grid-stack">
+                  <t t-foreach="state.charts" t-as="chart">
+                    <ChartFactory
+                            t-key="chart.id"
+                            chart="chart"
+                            layout="state.gridConfig"
+                            t-on-resize_chart="resize_chart"
 
-              <t t-foreach="state.charts" t-as="chart">
-                <ChartFactory
-                        t-key="chart.id"
-                        chart="chart"
-                        google="google"
-                        t-ref="chart"
-                />
-             </t>
+                    />
+                 </t>
+              </div>
         </div>
       </div>
   </t>
@@ -34,18 +40,45 @@
     />
 </t>
 
+    <t t-name="iboard.BoardHeaderOptions" owl="1">
+                     <div class="">
+              <button type="button"
+                      class="btn btn-outline-primary btn-sm float-right ml-2"
+                      t-att-class="state.staticGrid ? '':'d-none'"
+                      t-on-click="editLayout()">
+                <i class="fa fa-edit"/>
+                  Editar layout
+            </button>
+                         <button type="button"
+                                 class="btn btn-outline-primary btn-sm float-right"
+                                 t-att-class="state.staticGrid ? 'd-none':''"
+                                 t-on-click="editLayoutSave()">
+                <i class="fa fa-edit"/>
+                             Guardar layout
+            </button>
+                </div>
+    </t>
+
     <t t-name="iboard.BaseChart" owl="1">
-      <div class="grid-stack-item" t-att-gs-min-h="props.chart.config.gsMinHeight" t-att-gs-min-w="props.chart.config.gsMinWidth"
-        t-att-id="props.chart.id">
+      <div class="grid-stack-item"
+           t-on-resize_chart="resize_chart"
+           t-att-gs-h="props.chart.config.gsMinHeight"
+           t-att-gs-w="props.chart.config.gsMinWidth"
+           t-att-gs-min-h="2"
+           t-att-gs-min-w="2"
+           t-att-id="props.chart.id"
+           t-att-gs-x="props.layout[props.chart.id].x"
+           t-att-gs-y="props.layout[props.chart.id].y"
+      >
         <div class="o_kanban_view o_kanban_ungrouped iboard_kanban grid-stack-item-content">
         <div class="oe_kanban_card oe_kanban_global_click o_kanban_record "
-            >
+        >
                 <h4 class="o_kanban_record_title p-0 indicator-card-title">                                    <span>
                     <t t-esc="props.chart.title"/></span></h4>
             <div class="row">
                 <div class="col-12 ml-1" t-attf-id="chart_body_{{props.chart.id}}">
                 </div>
-                   <div class="col-12">
+                <div class="col-12">
                             <svg t-attf-id="chart_{{ props.chart.id }}"/>
                    </div>
             </div>
