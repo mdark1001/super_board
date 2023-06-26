@@ -146,7 +146,7 @@ class iChart(models.Model):
         values['config'] = self.get_default_config(values.get('chart_type'))
 
         result = super(iChart, self).create(values)
-
+        print(result)
         layout = json.loads(result.board_id.layout or [])
         layout[result.id] = {
             'x': 0,

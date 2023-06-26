@@ -29,7 +29,7 @@ class iBoard(models.Model):
     layout = fields.Text(
         string="Layout",
         required=False,
-        default="[]"
+        default="{}"
     )
 
     def action_show_board(self):
