@@ -21,6 +21,18 @@
                   sequence="10"
         />
 
+        <menuitem id="iboard_config"
+                  name="Configuración"
+                  parent="iboard_root"
+                  sequence="100"/>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="iboard_config_palette_view_action_menu"
+                  name="Paleta de colores"
+                  parent="iboard_config"
+                  action="iboard_config_palette_action"
+                  sequence="5"
+        />
+
         <record id="iboard_build_action" model="ir.actions.client">
             <field name="name">Constructor de tableros</field>
             <field name="tag">iboard_build</field>

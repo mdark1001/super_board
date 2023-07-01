@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="palette_3" model="iboard.config.palette">
+            <field name="name">Pastel 1</field>
+        </record>
+        <record id="palette_color_3_1" model="iboard.config.color">
+            <field name="color">#FBE7C6</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_2" model="iboard.config.color">
+            <field name="color">#B4F8C8</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_3" model="iboard.config.color">
+            <field name="color">#A0E7E5</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_4" model="iboard.config.color">
+            <field name="color">#FFAEBC</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_5" model="iboard.config.color">
+            <field name="color">#FD8A7D</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_6" model="iboard.config.color">
+            <field name="color">#FFB287</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_7" model="iboard.config.color">
+            <field name="color">#FFB7CF</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+        <record id="palette_color_3_8" model="iboard.config.color">
+            <field name="color">#A7D7C9</field>
+            <field name="palette_id" ref="palette_3"/>
+        </record>
+    </data>
+</odoo>

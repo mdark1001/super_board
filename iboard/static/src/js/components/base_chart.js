@@ -2,117 +2,63 @@
 
 
 
-const {Component} = owl;
+const {Component, useState} = owl;
 const {onWillUpdateProps} = owl.hooks
+import {useService} from "@web/core/utils/hooks";
+
 const {EventBus} = owl.core;
-import config from 'web.config';
-
-export function iboarColors(palette) {
-    let currentPalette = "oohel_4";
-    if (!palette) palette = currentPalette;
-    currentPalette = palette;
-
-    /*Gradients
-      The keys are percentage and the values are the color in a rgba format.
-      You can have as many "color stops" (%) as you like.
-      0% and 100% is not optional.*/
-    let colorsPalette;
-    if (palette === 'color1') {
-        colorsPalette = [
-            "#F79489",
-            "#F8AFA6",
-            "#FADCD9",
-            "#F9F1F0",
-        ]
-    } else if (palette === 'color2') {
-        colorsPalette = [
-            "#FBE7C6",
-            "#B4F8C8",
-            "#A0E7E5",
-            "#FFAEBC",
-            "#FBE7C6",
-            "#B4F8C8",
-            "#A0E7E5",
-            "#FFAEBC",
-        ];
-    } else if (palette === 'color3') {
-        colorsPalette = [
-            "#013A20",
-            "#285E32",
-            "#528443",
-            "#83AB52",
-            "#BAD260",
-            "#F9F871",
-        ]
-    } else if (palette === 'color4') {
-        colorsPalette = [
-            "#013A20",
-            "#9DB0A3",
-            "#697B70",
-            "#003856",
-            "#146788",
-        ]
-    } else if (palette === 'color5') {
-        colorsPalette = [
-            "#A664B5",
-            "#D06CA5",
-            "#EA7C95",
-            "#FA86B6",
-            "#F79489",
-        ]
-    }
 
 
-    return colorsPalette
-}
-
-export function iboardColorsTitle(palette) {
-    let colorsPalette = [
-        "#714B67",
-        "#A55E74",
-        "#D47773",
-        "#F59A6B",
-        "#A57C9A",
-        "#FFE5FF",
-        "#A0E7E5",
-        "#00C89C",
-    ];
-    if (!palette)
-        return '#C9CCD2'
-    let colorIndex = parseInt(palette.substr(-1))
-    return colorsPalette[colorIndex]
-}
 
 const {useExternalListener} = owl.hooks;
 
 export class iboardBaseChart extends Component {
     options = {}
     chartID = ''
-    chartType = 'bar'
+    chartType = ''
+    _factorDeviceSize = .8
+    static props = {
+        chart: {
+            type: Object
+        },
+        layout: {
+            type: Object
+        },
+        colors: {
+            type: 'function',
+        }
+    }
 
     setup() {
         super.setup();
-        this.chartID = 'chart_' + this.props.chart.id
-        this.colors = iboarColors(this.props.chart?.palette)
-        useExternalListener(window, "resizestop", this._onResize);
-        this.factorDeviceSize = .8
+        this.actionService = useService("action");
+        this.colors = this.props.colors(this.props.chart?.palette_id?.id)
         onWillUpdateProps(nextProps => {
             this.redrawSize()
         });
+        this.state = useState({
+            'chartID': this.setChartID(),
+
+        })
     }
 
     mounted() {
         super.mounted();
-
     }
 
-    setFactorDeviceSize() {
-
-
+    /**
+     * @param factor {number}
+     * */
+    setFactorDeviceSize(factor) {
+        this._factorDeviceSize = factor
     }
 
-    redrawSize(w, h) {
-        d3.select("#" + this.chartID).html("");
+    setChartID() {
+        return 'chart_' + this.props.chart.id
+    }
+
+    redrawSize() {
+        d3.select("#" + this.state.chartID).html("");
         d3.select("div#chart_body_" + this.props.chart.id).html("")
         this.draw()
     }
@@ -120,21 +66,12 @@ export class iboardBaseChart extends Component {
     draw() {
 
     }
-
-    getResize(event) {
-        console.log(event);
-    }
-
-    _onResize(event, ui) {
-        console.log(event);
-    }
-
     getWidth() {
-        return parseInt(this.props.chart.config.width) * this.factorDeviceSize
+        return parseInt(this.props.chart.config.width) * this._factorDeviceSize
     }
 
     getHeight() {
-        return parseInt(this.props.chart.config.height) * this.factorDeviceSize
+        return parseInt(this.props.chart.config.height) * this._factorDeviceSize
     }
 
     getDataChart() {
@@ -143,6 +80,26 @@ export class iboardBaseChart extends Component {
             d = d.filter(d => d.value > 0)
         }
         return d
+    }
+
+    editChart(event) {
+        event.preventDefault()
+        this.actionService.doAction({
+            name: 'Crear grupos',
+            res_model: 'iboard.chart',
+            res_id: this.props.chart.id,
+            context: {
+                'default_id': this.props.chart.id
+            },
+            views: [[false, 'form']],
+            type: "ir.actions.act_window",
+            view_mode: "form",
+            target: "new",
+        }, {
+            onClose: () => {
+
+            }
+        });
     }
 
 }

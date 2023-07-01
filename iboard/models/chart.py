@@ -98,17 +98,11 @@ class iChart(models.Model):
     )
 
     # apariencia
-    palette = fields.Selection(
+    palette_id = fields.Many2one(
+        comodel_name='iboard.config.palette',
         string='Paleta de colores',
-        selection=[
-            ('color1', 'Color 1'),
-            ('color2', 'Color 2'),
-            ('color3', 'Color 3'),
-            ('color4', 'Color 4'),
-            ('color5', 'Color 5'),
-        ],
         required=True,
-        default='color1'
+        default=lambda self: self.env.ref('iboard.palette_1')
     )
     config = fields.Text(
         string='Chart Config',
@@ -144,10 +138,8 @@ class iChart(models.Model):
     @api.model
     def create(self, values):
         values['config'] = self.get_default_config(values.get('chart_type'))
-
         result = super(iChart, self).create(values)
-        print(result)
-        layout = json.loads(result.board_id.layout or [])
+        layout = json.loads(result.board_id.layout or {})
         layout[result.id] = {
             'x': 0,
             'y': 0,
@@ -166,12 +158,14 @@ class iChart(models.Model):
             'gsMinWidth': 3,
             'gsMinHeight': 1,
         }
-        if chart_type in ['bars', 'pie']:
+        if chart_type == 'pie':
             data.update({
                 'width': '450px',
                 'height': '450px',
                 'filter_empty': True,
                 'gsMinWidth': 3,
-                'gsMinHeight': 3
+                'gsMinHeight': 3,
+                'typeTooltip': 'tooltip',
+                'showTotal': False,
             })
-        return json.dumps(data)
+        return json.dumps(data, indent=6)

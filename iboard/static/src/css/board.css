@@ -1,6 +1,3 @@
-.iboard-dashboard-title {
-    text-align: start;
-}
 
 div.iboard-body {
     box-sizing: border-box;
@@ -10,15 +7,19 @@ div.iboard-body {
     flex-flow: column wrap;
     overflow-y: scroll;
 }
+
 .indicator-card {
     border-left-width: 3px !important;
 }
 
 div.iboard_kanban {
-    display: inline-flex !important;
-    padding: 0 !important;
+    overflow: hidden !important;
 }
-.o_kanban_view.o_kanban_ungrouped{
+div.iboard_base{
+     background-color: white !important;
+}
+
+.o_kanban_view.o_kanban_ungrouped {
     min-height: fit-content;
 }
 
@@ -33,9 +34,27 @@ div.iboard_kanban {
     font-weight: bolder;
 }
 
+.tick-label {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    fill: black;
+}
+
+.marker {
+    fill: white;
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.connector-line {
+    stroke: gray;
+    stroke-width: 1px;
+}
+
 .indicator-card-title {
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
+    margin: 10px;
 }
 
 
@@ -48,6 +67,11 @@ div.iboard_kanban {
     display: flex;
     align-items: center;
     margin-left: 5px;
+    cursor: pointer;
+}
+
+.legend-item.unselected {
+    text-decoration: line-through;
 }
 
 .legend-color {
@@ -58,7 +82,12 @@ div.iboard_kanban {
 }
 
 .legend-category {
+    font-size: 12px;
+    font-family: 'Roboto Light';
+}
 
+.iboard_header {
+    display: inline-grid;
 }
 
 .legend-value {
@@ -69,3 +98,18 @@ div.iboard_kanban {
     display: flex;
 }
 
+
+.toolTip {
+    position: absolute;
+    display: none;
+    width: auto;
+    height: auto;
+    background: none repeat scroll 0 0 white;
+    border: 0 none;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: -3px 3px 15px #888888;
+    color: black;
+    font: 12px sans-serif;
+    padding: 5px;
+    text-align: center;
+}

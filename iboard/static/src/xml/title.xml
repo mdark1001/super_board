@@ -11,11 +11,23 @@
              t-att-gs-x="props.layout[props.chart.id].x"
              t-att-gs-y="props.layout[props.chart.id].y"
         >
-        <div class="o_kanban_view o_kanban_ungrouped iboard_kanban grid-stack-item-content">
-        <div class="oe_kanban_card oe_kanban_global_click o_kanban_record indicator-card"
+
+            <div class="o_kanban_view o_kanban_ungrouped  grid-stack-item-content">
+
+        <div class="oe_kanban_card  iboard_kanban oe_kanban_global_click o_kanban_record indicator-card"
              t-attf-style="border-left-color:{{ colors }}">
+            <div class="row">
+                <div class="col-1">
+<t t-call="iboard.MenuContainer"/>
+                    </div>
+                <div class="col-10">
             <h4 class="o_kanban_record_title p-0 indicator-card-title">                                    <span> <t
-                    t-esc="props.chart.title"/></span></h4>
+                    t-esc="props.chart.title"/>
+            </span>
+
+            </h4>
+                    </div>
+                </div>
             <div class="row">
                             <div class="col-8">
                                 <div class="container o_kanban_card_content" modifiers="{}">

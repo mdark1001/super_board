@@ -3,6 +3,7 @@
 @date: 2/21/23
 @name: 
 """
+from collections import defaultdict
 import json
 
 from odoo import api, fields, models
@@ -52,11 +53,14 @@ class iBoard(models.Model):
             ('chart_ids', (
                 'id', 'title',
                 'chart_type', 'description',
-                'preview', 'palette', 'config',
+                'preview', ('palette_id', ('id',)), 'config',
                 'set_icon', 'icon', 'title_design',
             ))
         ]
-        return board.jsonify(one=True, parser=data)
+        data = board.jsonify(one=True, parser=data)
+        palettes = self.get_palettes_colors()
+        data['palettes'] = palettes
+        return data
 
     @api.model
     @validate_record(model='iboard.board', key='board_id')
@@ -72,3 +76,16 @@ class iBoard(models.Model):
                 'config': json.dumps(item['config'])
             })
         return {"state": "ok"}
+
+    def get_palettes_colors(self):
+        records = self.env['iboard.config.palette'].search(
+            []
+        ).jsonify(parser=[
+            'id', 'name', ('color_ids', ('color',))
+        ])
+        data = defaultdict(list)
+        for record in records:
+            print(record)
+            data[record['id']] = list(map(lambda s: s['color'], record['color_ids']))
+
+        return data

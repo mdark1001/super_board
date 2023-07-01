@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="palette_1" model="iboard.config.palette">
+            <field name="name">Cooled</field>
+        </record>
+        <record id="palette_color_1" model="iboard.config.color">
+            <field name="color">#305672</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_2" model="iboard.config.color">
+            <field name="color">#007B93</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_3" model="iboard.config.color">
+            <field name="color">#00A0A0</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_4" model="iboard.config.color">
+            <field name="color">#4B6187</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_5" model="iboard.config.color">
+            <field name="color">#6B6B98</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_6" model="iboard.config.color">
+            <field name="color">#6488A6</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_7" model="iboard.config.color">
+            <field name="color">#9DADBC</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+        <record id="palette_color_8" model="iboard.config.color">
+            <field name="color">#009DF8</field>
+            <field name="palette_id" ref="palette_1"/>
+        </record>
+    </data>
+</odoo>

@@ -60,7 +60,7 @@
                             </page>
                             <page name="page_appearance" string="Estilo">
                                 <group>
-                                    <field name="palette"/>
+                                    <field name="palette_id"/>
                                     <field name="set_icon"/>
                                     <field name="icon"
                                            attrs="{'invisible':[('set_icon','=',False)]}"
@@ -70,7 +70,9 @@
                                     />
                                 </group>
                                 <group>
-                                    <field name="config"/>
+                                    <pre>
+                                        <field name="config"/>
+                                    </pre>
                                 </group>
                             </page>
                         </notebook>

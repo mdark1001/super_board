@@ -9,6 +9,7 @@ import {loadAssets} from "@web/core/assets";
 import {ChartFactory} from "./components/chart_factory";
 import {BOARD_MODEL} from "./common";
 import config from 'web.config';
+import {iboarColors} from "./components/helpers";
 
 
 const {Component, useState, core, hooks, reactive} = owl;
@@ -49,6 +50,7 @@ class Board extends Component {
         let charts = await this.callGetChartsFromDashboard();
         this.state.boardName = charts.name
         this.state.charts = charts.chart_ids
+        this.state.colors = iboarColors(charts.palettes)
         this.state.gridConfig = JSON.parse(charts.layout)
     }
 
