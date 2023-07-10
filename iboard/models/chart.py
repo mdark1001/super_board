@@ -6,6 +6,7 @@
 import json
 
 from odoo import api, fields, models
+from odoo.tools.convert import safe_eval
 from odoo.addons.iboard.models.chart_builder import ChartBuilder
 
 
@@ -36,6 +37,7 @@ class iChart(models.Model):
             ('title', 'Tarjeta'),
             ('pie', 'Gráfico circular'),
             ('bar', 'Gráfico de barras'),
+            ('tree', 'Mapas de árbol'),
             ('text', 'Texto enriquecido'),
         ],
         required=True,
@@ -88,6 +90,7 @@ class iChart(models.Model):
                "'|','|',('ttype','=','integer'),('ttype','=','float'),"
                "('ttype','=','monetary')]",
     )
+
     model_field_group_by_1 = fields.Many2one(
         'ir.model.fields',
         domain="[('model_id','=',model_id_1),('name','!=','id'),('name','!=','sequence'),"
@@ -95,6 +98,36 @@ class iChart(models.Model):
                "('ttype','!=','one2many')]",
         string="Agrupar por",
         help=''
+    )
+    model_field_1_date_agg = fields.Selection(
+        string='Por fecha de',
+        selection=[
+            ('year', 'Año'),
+            ('month', 'Mes'),
+            ('day', 'Día'),
+        ],
+        required=False,
+        default='year',
+    )
+
+    model_field_group_1_ttype = fields.Selection(
+        string='Tipo de campo',
+        related='model_field_group_by_1.ttype',
+        store=True,
+    )
+
+    model_field_group_by_2 = fields.Many2one(
+        'ir.model.fields',
+        domain="[('model_id','=',model_id_1),('name','!=','id'),('name','!=','sequence'),"
+               "('store','=',True),('ttype','!=','binary'),"
+               "('ttype','!=','one2many')]",
+        string="Subgrupo por",
+        help=''
+    )
+    model_field_group_2_ttype = fields.Selection(
+        string='Tipo de campo',
+        related='model_field_group_by_2.ttype',
+        store=True,
     )
 
     # apariencia
@@ -127,6 +160,30 @@ class iChart(models.Model):
         ],
         required=False,
         default='d0'
+    )
+
+    stacked = fields.Boolean(
+        string='Apiladas',
+        default=False
+    )
+    legend_position = fields.Selection(
+        string='Etiquetas',
+        selection=[
+            ('top', 'Arriba'),
+            ('bottom', 'Abajo'),
+            ('left', 'Izquierda'),
+            ('right', 'Derecha'),
+        ],
+        required=True,
+        default='top'
+    )
+    order_by = fields.Selection(
+        string='Ordenar',
+        selection=[
+            ('desc', 'Decendiente'),
+            ('asc', 'Acescente'),
+        ],
+        required=False,
     )
 
     def get_preview_chart_data(self):
@@ -169,3 +226,39 @@ class iChart(models.Model):
                 'showTotal': False,
             })
         return json.dumps(data, indent=6)
+
+    def get_values_selection(self, model_name, field):
+        """
+        The get_values_selection function is a helper function that returns a list of tuples.
+        The first element in the tuple is the key value and the second element in the tuple
+        is its translated label. The model parameter should be an Odoo model object, and key
+        should be one of its fields (e.g., 'state'). This function will return all values for
+        the given field as tuples with their keys and labels.
+
+        :param model: Get the selection values from the model
+        :param key: Get the selection list of the fields
+        :return: A list of tuples containing the selection key and its translation
+        :doc-author: Trelent
+        """
+        # print(request.env.user.lang)
+        _options = self.env['ir.translation'].with_context(lang=self.env.user.lang).get_field_selection(
+            model_name,
+            field
+        )
+        return {o[0]: o[1] for o in _options}
+
+    def getModel(self):
+        return self.env[self.model_name_1]
+
+    def getModelName(self):
+        return self.model_name_1
+
+    def get_domain(self):
+        _filter = []
+        if not self.domain_model_1:
+            return _filter
+        try:
+            _filter = safe_eval(self.domain_model_1)
+        except JSONDecodeError as e:
+            _filter = []
+        return _filter

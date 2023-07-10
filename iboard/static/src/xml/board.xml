@@ -35,7 +35,7 @@
         </div>
       </div>
   </t>
-<t t-name="iboard.ChartFactory" owl="1">
+    <t t-name="iboard.ChartFactory" owl="1">
         <t t-component="getChart"
            t-props="props"
         />
@@ -49,49 +49,74 @@
                 <i class="fa fa-edit"/>
                   Editar layout
             </button>
-             <button type="button"
-                     class="btn btn-outline-primary btn-sm float-right"
-                     t-att-class="state.staticGrid ? 'd-none':''"
-                     t-on-click="editLayoutSave()">
+         <button type="button"
+                 class="btn btn-outline-primary btn-sm float-right"
+                 t-att-class="state.staticGrid ? 'd-none':''"
+                 t-on-click="editLayoutSave()">
                     <i class="fa fa-edit"/>
-                 Guardar layout
+             Guardar layout
                 </button>
 
      </div>
     </t>
 
     <t t-name="iboard.BaseChart" owl="1">
-      <div class="grid-stack-item"
-           t-on-resize_chart="resize_chart"
-           t-att-gs-h="props.chart.config.gsMinHeight"
-           t-att-gs-w="props.chart.config.gsMinWidth"
-           t-att-gs-min-h="2"
-           t-att-gs-min-w="2"
-           t-att-id="props.chart.id"
-           t-att-gs-x="props.layout[props.chart.id].x"
-           t-att-gs-y="props.layout[props.chart.id].y"
-      >
+        <GenericContainerBaseChart
+                slots="props"
+                editChart="editChart"
+        >
+            <t t-set-slot="content">
+                <div class="toolTip" t-attf-id="tooltip_{{ props.chart.id }}"/>
+                <svg t-attf-id="chart_{{ props.chart.id }}"/>
+            </t>
+        </GenericContainerBaseChart>
+    </t>
+
+    <t t-name="iboard.ChartJS" owl="1">
+          <GenericContainerBaseChart
+                  slots="props"
+                  editChart="editChart"
+          >
+              <t t-set-slot="content">
+                  <div class="chart-container"
+                       style="width: 100%;height: 100%;">
+                        <canvas t-attf-id="chart_canvas_{{ props.chart.id }}"/>
+                  </div>
+              </t>
+          </GenericContainerBaseChart>
+    </t>
+
+    <t t-name="GenericContainerBaseChart" owl="1">
+          <div class="grid-stack-item"
+               t-on-resize_chart="resize_chart"
+               t-att-gs-h="props.slots.chart.config.gsMinHeight"
+               t-att-gs-w="props.slots.chart.config.gsMinWidth"
+               t-att-gs-min-h="2"
+               t-att-gs-min-w="2"
+               t-att-id="props.slots.chart.id"
+               t-att-gs-x="props.slots.layout[props.slots.chart.id].x"
+               t-att-gs-y="props.slots.layout[props.slots.chart.id].y"
+          >
         <div class="iboard_kanban  iboard_base grid-stack-item-content">
 
             <div class="oe_kanban_card oe_kanban_global_click o_kanban_record ">
                 <div class="row">
                     <div class="col-1">
-                      <t t-call="iboard.MenuContainer"/></div>
+                      <t t-call="iboard.MenuContainer"/>
+                    </div>
                     <div class="col-10">
                     <h4 class="o_kanban_record_title p-1 indicator-card-title">
                                 <span>
-                                    <t t-esc="props.chart.title"/>
+                                    <t t-esc="props.slots.chart.title"/>
                                 </span>
                         </h4>
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-12 ml-1" t-attf-id="chart_body_{{props.chart.id}}">
+                <div class="col-12 ml-1" t-attf-id="chart_body_{{props.slots.chart.id}}">
                 </div>
                     <div class="col-12">
-                    <div class="toolTip" t-attf-id="tooltip_{{ props.chart.id }}">
-                    </div>
-                        <svg t-attf-id="chart_{{ props.chart.id }}"/>
+                        <t t-slot="content"/>
                 </div>
             </div>
         </div>
@@ -99,28 +124,29 @@
         </div>
     </t>
 
+
     <t t-name="iboard.MenuContainer" owl="1">
     <div class="dropdown" modifiers="{}">
         <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
-        data-display="static" href="#" aria-label="Menú desplegable" title="Menú desplegable"
-        modifiers="{}">
+           data-display="static" href="#" aria-label="Menú desplegable" title="Menú desplegable"
+           modifiers="{}">
         <span class="fa fa-ellipsis-v" modifiers="{}"></span>
     </a>
-    <div class="dropdown-menu" role="menu" modifiers="{}">
+        <div class="dropdown-menu" role="menu" modifiers="{}">
         <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
            modifiers="{}" data-type="edit" href="#"
            t-on-click="editChart"
         >Editar</a>
-        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-           modifiers="{}" data-type="object" data-name="action_send_survey"
-           href="#">Compartir
+            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+               modifiers="{}" data-type="object" data-name="action_send_survey"
+               href="#">Compartir
         </a>
-        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-           modifiers="{}" data-type="delete" href="#">Eliminar
+            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+               modifiers="{}" data-type="delete" href="#">Eliminar
         </a>
-        <div role="separator" class="dropdown-divider" modifiers="{}"></div>
-         <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-           modifiers="{}" data-type="delete" href="#">Ajustes
+            <div role="separator" class="dropdown-divider" modifiers="{}"></div>
+            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
+               modifiers="{}" data-type="delete" href="#">Ajustes
         </a>
     </div>
 </div>

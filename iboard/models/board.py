@@ -54,7 +54,7 @@ class iBoard(models.Model):
                 'id', 'title',
                 'chart_type', 'description',
                 'preview', ('palette_id', ('id',)), 'config',
-                'set_icon', 'icon', 'title_design',
+                'set_icon', 'icon', 'title_design', 'stacked', 'legend_position','order_by'
             ))
         ]
         data = board.jsonify(one=True, parser=data)

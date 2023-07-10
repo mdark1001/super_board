@@ -9,17 +9,17 @@ export class iboardPieChart extends iboardBaseChart {
 
     setup() {
         super.setup();
-        this.setChartID()
         this.state.unSelected = []
+
     }
 
     async willStart() {
         super.willStart();
-
     }
 
     mounted() {
         super.mounted();
+        this.setFactorDeviceSize(.6)
         this.draw()
     }
 
@@ -27,20 +27,26 @@ export class iboardPieChart extends iboardBaseChart {
     draw() {
         // Dimensions and settings
         super.draw();
-        var width = this.getWidth();
-        var height = this.getHeight();
-        var radius = Math.min(width, height) / 2;
+        let width = this.getWidth();
+        let height = this.getHeight();
+        let radius = Math.min(width, height) / 2;
         this.color = this.props.colors(this.props.chart.palette_id?.id)
         // Create the SVG element
-        this.svg = this.startSVG(width, height)
+        this.svg = this.startSVG(
+            width,
+            height,
+            width - 50,
+            height / 2
+        )
         // Generate the arcs
         this.arc = d3.arc()
             .innerRadius(radius * 0.6)
             .outerRadius(radius);
-
+        this.data = this.getDataChart()
+        console.log(this.data);
         // Generate the pie layout
         this.pie = this.startPie()
-        this.data = this.getDataChart()
+
         this.data = this.filterUnSelectedOptions()
         // Generate the chart
         this.arcs = this.svg.selectAll("arc")
@@ -67,23 +73,6 @@ export class iboardPieChart extends iboardBaseChart {
 
     }
 
-    catchResize(event) {
-        console.log(event);
-    }
-
-    _svgSelector() {
-        return d3.select("#" + this.state.chartID)
-    }
-
-    startSVG(width, height) {
-
-        return this._svgSelector()
-            .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 600 400")
-            .append("g")
-            .attr("transform", "translate(" + (width - 50) + "," + height / 2 + ")");
-
-    }
 
     startPie() {
         return d3.pie()
@@ -97,8 +86,8 @@ export class iboardPieChart extends iboardBaseChart {
         this.svg.selectAll("path").on(
             'mouseover', (e) => {
                 d3.select("#tooltip_" + this.props.chart.id)
-                    .style("left", (e.pageX * .25) + "px")
-                    .style("top", (e.pageY * .3) + "px")
+                    .style("left", (e.pageX * .15) + "px")
+                    .style("top", (e.pageY * .15) + "px")
                     .style("display", "inline-block")
                     .text(e.target.__data__.data.label + ' ' + e.target.__data__.value)
             }).on("mouseout", (e) => {
@@ -114,7 +103,6 @@ export class iboardPieChart extends iboardBaseChart {
             .attr("class", "legend");
         // Add a color-coded box and labels for each data point
         let data = [...this.data, ...this.state.unSelected]
-        console.log(data);
         var legendItems = legend.selectAll(".legend-item")
             .data(data)
             .enter()
@@ -190,7 +178,6 @@ export class iboardPieChart extends iboardBaseChart {
 
         this.arcs.append("text")
             .attr("transform", d => {
-                console.log(d);
                 const pos = this.arc.centroid(d);
                 const midAngle = Math.atan2(pos[1], pos[0]);
                 const x = Math.cos(midAngle) * (radius + 10); // Adjust the distance of labels from the pie chart
@@ -203,8 +190,8 @@ export class iboardPieChart extends iboardBaseChart {
                 return (pos[0] >= 0) ? "start" : "end";
             })
             .attr("class", "legend-category")
-            .style("cursor",'pointer')
-            .on('click',this.legendClick.bind(this))
+            .style("cursor", 'pointer')
+            .on('click', this.legendClick.bind(this))
             .text(d => {
                     return d.data.label + " (" + d.value + ")"
                 }
@@ -216,18 +203,14 @@ export class iboardPieChart extends iboardBaseChart {
         let sumaTotal = [...this.data].reduce((previousValue, currentValue) => {
             return previousValue + currentValue.value
         }, 0)
-        console.log(sumaTotal);
         let BigNumber = d3.select("#" + this.state.chartID).append("g")
-            .attr("transform", "translate(" + ((width / 2) + 80) + "," + ((height / 2) + 20) + ")")
+            .attr("transform", "translate(" + ((width / 2) + 50) + "," + ((height / 2) + 20) + ")")
             .append("text")
             .attr('class', "indicator-card-number")
             .attr("title", sumaTotal + " Registros")
             .text(sumaTotal)
     }
 
-    getPaletteItem(index) {
-        return this.color[index % this.color.length];
-    }
 
     legendClick(event) {
         if (event.target.className !== 'legend-category')
@@ -251,7 +234,7 @@ export class iboardPieChart extends iboardBaseChart {
     }
 
     filterUnSelectedOptions() {
-        return this.data.filter(item => this.getIndexLegendFromText(item.label) === -1)
+        return this.data
     }
 
 

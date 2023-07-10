@@ -8,9 +8,9 @@ from abc import ABC, abstractmethod
 
 
 class ChartBase(ABC):
-    _logger = logging.getLogger(__name__)
-    data = dict()
+    _logger = logging.getLogger(__name__).info
     _builder = None
+    field_name: str = None
 
     @abstractmethod
     def compute(self):
@@ -19,3 +19,7 @@ class ChartBase(ABC):
     @abstractmethod
     def get_data(self):
         raise NotImplemented
+
+    def set_field_name(self):
+        self.field_name = self._builder.model_field_group_by_1.name
+        return self

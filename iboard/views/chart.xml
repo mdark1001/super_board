@@ -36,7 +36,9 @@
                                   attrs="{'invisible':[('chart_type','=','text')]}"
                             >
                                 <group>
-                                    <group>
+                                    <group string="Origen de los datos" name="origin_group">
+                                        <field name="model_field_group_1_ttype" invisible="0"/>
+                                        <field name="model_field_group_2_ttype" invisible="0"/>
                                         <field name="model_id_1"/>
                                         <field name="model_name_1"
                                                invisible="1"
@@ -48,9 +50,20 @@
                                         <field name="model_field_group_by_1"
                                                attrs="{'invisible':[('chart_type','in',('title',))]}"
                                         />
+                                        <field name="model_field_1_date_agg"
+                                               attrs="{'invisible':[('model_field_group_1_ttype','not in',('date','datetime'))]}"
+                                        />
+
+                                        <field name="model_field_group_by_2"
+                                               attrs="{'invisible':[('chart_type','in',('title',))]}"
+                                        />
+
+                                    </group>
+                                    <group string="Opciones" name="opt_group">
+                                        <field name="order_by"/>
                                     </group>
                                 </group>
-                                <group>
+                                <group string="Filtro">
                                     <field name="domain_model_1"
                                            widget="domain"
                                            context="{'current_id': id}"
@@ -61,6 +74,8 @@
                             <page name="page_appearance" string="Estilo">
                                 <group>
                                     <field name="palette_id"/>
+                                    <field name="stacked" widget="boolean_toggle"/>
+                                    <field name="legend_position" widget="radio"/>
                                     <field name="set_icon"/>
                                     <field name="icon"
                                            attrs="{'invisible':[('set_icon','=',False)]}"

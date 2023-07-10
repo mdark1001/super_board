@@ -7,3 +7,5 @@ from . import response
 from . import chart_base
 from . import chart_title
 from . import chart_pie
+from . import chart_bars
+from . import chart_tree

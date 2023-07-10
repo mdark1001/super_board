@@ -8,14 +8,10 @@ export class iboardTitle extends iboardBaseChart {
 
     setup() {
         super.setup();
-        console.log(this.props);
         this.chartID = 'chart_' + this.props.chart.id
         if (this.props.chart.title_design === 'd0')
             this.props.chart.palette = undefined
         this.colors = ''
-        //this.colors = iboardColorsTitle(this.props.chart?.palette)
-        // todo agregar icons
-        console.log(this.colors);
 
     }
 

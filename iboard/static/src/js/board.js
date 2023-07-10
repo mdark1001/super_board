@@ -4,23 +4,20 @@
  * @date: 15/03/2023
  * */
 import {registry} from "@web/core/registry";
-import {useBus, useService} from "@web/core/utils/hooks";
+import {useService} from "@web/core/utils/hooks";
 import {loadAssets} from "@web/core/assets";
 import {ChartFactory} from "./components/chart_factory";
 import {BOARD_MODEL} from "./common";
-import config from 'web.config';
 import {iboarColors} from "./components/helpers";
-
 
 const {Component, useState, core, hooks, reactive} = owl;
 const {EventBus} = core;
-const {useRef} = hooks;
 
 class Board extends Component {
     async setup() {
         super.setup();
         this.editedChartSize = [];
-        let boardID = 1 // this.props.action.params?.board_id || this.props.action.params?.active_id
+        let boardID = 3 // this.props.action.params?.board_id || this.props.action.params?.active_id
         this.state = useState({
             'boardID': boardID,
             'charts': [],
@@ -33,6 +30,9 @@ class Board extends Component {
             jsLibs: [
                 "https://d3js.org/d3.v7.min.js",
                 "/iboard/static/src/js/node_modules/gridstack/dist/es5/gridstack-all.js",
+                "https://cdn.jsdelivr.net/npm/chart.js@2.9.3",
+
+                //
             ],
             cssLibs: [
                 "/iboard/static/src/js/node_modules/gridstack/dist/gridstack.min.css",
@@ -42,7 +42,13 @@ class Board extends Component {
             ],
         };
         await loadAssets(this.assets);
-        this.charts = hooks.useRef('chart')
+        await loadAssets(
+            {
+                jsLibs: [
+                    "https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@0.2.3",
+                ]
+            }
+        )
     }
 
     async willStart() {
@@ -83,6 +89,8 @@ class Board extends Component {
             let chartIndex = this.state.charts.findIndex(elem => elem.id == chartID)
             this.state.charts[chartIndex].config.gsMinHeight = node.h;
             this.state.charts[chartIndex].config.gsMinWidth = node.w;
+            this.state.charts[chartIndex].config.width = node.el.offsetWidth + 'px';
+            this.state.charts[chartIndex].config.height = node.el.offsetHeight + 'px';
             this.editedChartSize.push({
                     chartID: chartID,
                     config: this.state.charts[chartIndex].config
@@ -124,7 +132,6 @@ class Board extends Component {
                 res.chart_ids[item].data = JSON.parse(res.chart_ids[item].preview)
                 res.chart_ids[item].config = JSON.parse(res.chart_ids[item].config)
             }
-            console.log(res);
             return res
         })
     }

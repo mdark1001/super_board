@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^4.3.0",
+    "chartjs-chart-treemap": "^2.3.0",
     "gridstack": "^8.2.3"
   }
 }

@@ -10,23 +10,25 @@ class Title(ChartBase):
 
     def __init__(self, builder):
         self._builder = builder
-        self.data.update({
+        self.data = {
             'total': 0
-        })
+        }
 
     def compute(self):
         model = self._builder.getModel()
-        field_name = self._builder.chart.model_field_1.name
+        field_name = self._builder.model_field_1.name
         total = 0
-        if self._builder.chart.operation_model_1 == 'count':
+        if self._builder.operation_model_1 == 'count':
             total = self.get_count(model)
         else:
             total = self._fetch_data_model(
-                model=model, field=field_name,
-                op=self._builder.chart.operation_model_1
+                model=model,
+                field=field_name,
+                op=self._builder.operation_model_1
             )
 
         self.data['total'] = total
+        return self
 
     def get_data(self):
         return self.data

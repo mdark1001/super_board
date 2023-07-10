@@ -40,11 +40,13 @@
         'web.assets_backend': [
             'iboard/static/src/js/common.js',
             'iboard/static/src/js/components/helpers.js',
+            'iboard/static/src/js/components/plugins.js',
             'iboard/static/src/js/board.js',
             'iboard/static/src/js/components/chart_factory.js',
             'iboard/static/src/js/components/base_chart.js',
             'iboard/static/src/js/components/title_chart.js',
-            'iboard/static/src/js/components/pie_chart.js',
+            'iboard/static/src/js/components/doughnut.js',
+            'iboard/static/src/js/components/tree-map.js',
             'iboard/static/src/js/components/bar_chart.js',
 
         ],

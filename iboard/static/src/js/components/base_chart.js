@@ -9,8 +9,36 @@ import {useService} from "@web/core/utils/hooks";
 const {EventBus} = owl.core;
 
 
-
 const {useExternalListener} = owl.hooks;
+
+class GenericContainerBaseChart extends Component {
+    static template = 'GenericContainerBaseChart'
+
+    setup() {
+        super.setup();
+        this.actionService = useService("action");
+    }
+
+    editChart(event) {
+        event.preventDefault()
+        this.actionService.doAction({
+            name: 'Crear grupos',
+            res_model: 'iboard.chart',
+            res_id: this.props.slots.chart.id,
+            context: {
+                'default_id': this.props.slots.chart.id
+            },
+            views: [[false, 'form']],
+            type: "ir.actions.act_window",
+            view_mode: "form",
+            target: "new",
+        }, {
+            onClose: () => {
+
+            }
+        });
+    }
+}
 
 export class iboardBaseChart extends Component {
     options = {}
@@ -31,14 +59,13 @@ export class iboardBaseChart extends Component {
 
     setup() {
         super.setup();
-        this.actionService = useService("action");
+
         this.colors = this.props.colors(this.props.chart?.palette_id?.id)
         onWillUpdateProps(nextProps => {
             this.redrawSize()
         });
         this.state = useState({
-            'chartID': this.setChartID(),
-
+            'chartID': this.getChartID(),
         })
     }
 
@@ -53,7 +80,7 @@ export class iboardBaseChart extends Component {
         this._factorDeviceSize = factor
     }
 
-    setChartID() {
+    getChartID() {
         return 'chart_' + this.props.chart.id
     }
 
@@ -66,6 +93,7 @@ export class iboardBaseChart extends Component {
     draw() {
 
     }
+
     getWidth() {
         return parseInt(this.props.chart.config.width) * this._factorDeviceSize
     }
@@ -75,34 +103,44 @@ export class iboardBaseChart extends Component {
     }
 
     getDataChart() {
-        let d = this.props.chart.data.datasets;
-        if (this.props.chart.config.filter_empty) {
-            d = d.filter(d => d.value > 0)
-        }
-        return d
+        // To avoid recursión on data observable,
+        // we destroy the object and create new one
+        return JSON.parse(JSON.stringify(this.props.chart.data));
     }
 
-    editChart(event) {
-        event.preventDefault()
-        this.actionService.doAction({
-            name: 'Crear grupos',
-            res_model: 'iboard.chart',
-            res_id: this.props.chart.id,
-            context: {
-                'default_id': this.props.chart.id
+    getSVGSelector() {
+        return d3.select("#" + this.state.chartID)
+    }
+
+    startSVG(width, height, pos_x, pos_y) {
+        return this.getSVGSelector()
+            .attr("viewBox", "0 0 600 400")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .append("g")
+            .attr("transform", "translate(" + pos_x + "," + pos_y + ")");
+
+    }
+
+    getPaletteItem(index) {
+        return this.colors[index % this.colors.length];
+    }
+
+     getChartOptions() {
+        let config = {
+            responsive: true,
+            legend: {
+                position: this.props.chart.legend_position // place legend on the right side of chart
             },
-            views: [[false, 'form']],
-            type: "ir.actions.act_window",
-            view_mode: "form",
-            target: "new",
-        }, {
-            onClose: () => {
+        }
 
-            }
-        });
+        return config
     }
+
 
 }
 
 iboardBaseChart.template = 'iboard.BaseChart'
 iboardBaseChart.bus = new EventBus()
+iboardBaseChart.components = {
+    GenericContainerBaseChart
+}
