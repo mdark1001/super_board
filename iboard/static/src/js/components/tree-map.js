@@ -294,12 +294,14 @@ export class iBoardTreeMap extends iboardBaseChart {
         return d3.select("#tooltip_" + this.props.chart.id);
     }
     showTooltip(event,d) {
+        console.log(d);
+        let key = this.data.config.key
         const tooltip = this.getTooltipSelector()
         tooltip
             .style("left", `${event.pageX}px`)
-            .style("top", `${event.pageY-70}px`)
+            .style("top", `${event.pageY-100}px`)
             .style("display", "inline-block")
-            .html(`Total: ${d.value}`);
+            .html(`${d.data[this.data.config.groups[0]]} - ${d.data[this.data.config.groups[1]]} : ${d.data[key]}`);
     }
     moveTooltip(event) {
         const tooltip = this.getTooltipSelector()
