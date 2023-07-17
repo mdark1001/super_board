@@ -147,6 +147,7 @@ export class iBoardTreeMap extends iboardBaseChart {
             })
             .attr("x", d => (d.x0 + d.x1) / 2)
             .attr("y", d => (d.y0 + d.y1) / 2)
+            .attr("class","indicator-body")
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
@@ -166,6 +167,7 @@ export class iBoardTreeMap extends iboardBaseChart {
             .attr('class', "total")
             .attr("x", d => (d.x0 + d.x1) / 2)
             .attr("y", d => ((d.y0 + d.y1) / 2) + (fontSize(d)))
+            .attr("class","indicator-body")
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
@@ -191,6 +193,7 @@ export class iBoardTreeMap extends iboardBaseChart {
                 return d.data.name
             })
             .attr("font-size", "19px")
+            .attr("class","indicator-body")
             .attr("fill", function (d) {
                 return "gray"
             })
