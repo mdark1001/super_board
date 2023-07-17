@@ -97,7 +97,6 @@ export class iBoardTreeMap extends iboardBaseChart {
     }
 
     startDrawRect(root) {
-        console.log(this.data.datasets);
         let scaleColor = this.calcScaleColor(root)
         let opacity = this.calcScaleOpacity(root)
         this.node
@@ -126,11 +125,14 @@ export class iBoardTreeMap extends iboardBaseChart {
                     return opacity(d.value)
                 return opacity[d.parent.data.name](d.value)
             })
+            .on("mouseover", this.showTooltip.bind(this))
+            .on("mousemove", this.moveTooltip.bind(this))
+            .on("mouseout", this.hideTooltip.bind(this));
     }
 
 
     startAddTextLevels(root) {
-        const fontSize = d => Math.sqrt((d.x1 - d.x0) * (d.y1 - d.y0)) / 10;
+        let fontSize = d => Math.sqrt((d.x1 - d.x0) * (d.y1 - d.y0)) / 10;
         this.node
             .selectAll("text")
             .data(root.leaves())
@@ -149,12 +151,10 @@ export class iBoardTreeMap extends iboardBaseChart {
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
             .attr("fill", this.props.chart.config.textColor || 'white')
-            .attr('word-wrap', 'break-word')
     }
 
     startAddTextTotal(root) {
-
-        const fontSize = d => Math.sqrt((d.x1 - d.x0) * (d.y1 - d.y0)) / 15;
+        let fontSize = d => Math.sqrt((d.x1 - d.x0) * (d.y1 - d.y0)) / 15;
         this.node
             .selectAll("text.total")
             .data(root.leaves())
@@ -165,7 +165,7 @@ export class iBoardTreeMap extends iboardBaseChart {
             })
             .attr('class', "total")
             .attr("x", d => (d.x0 + d.x1) / 2)
-            .attr("y", d => ((d.y0 + d.y1) / 2) + (fontSize(d) ))
+            .attr("y", d => ((d.y0 + d.y1) / 2) + (fontSize(d)))
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
@@ -174,7 +174,6 @@ export class iBoardTreeMap extends iboardBaseChart {
     }
 
     setSubgroupLabels(root) {
-
         this.node
             .selectAll("titles")
             .data(root.descendants().filter(function (d) {
@@ -197,66 +196,6 @@ export class iBoardTreeMap extends iboardBaseChart {
             })
     }
 
-    /*  draw() {
-          super.draw();
-          const ctx = document.getElementById(this.getChartID());
-          ctx.setAttribute('width', '100%')
-          let h = this.getHeight()
-          ctx.setAttribute('height', h + 'ox')
-
-          this.data = this.getDataChart()
-          console.log(this.data.datasets);
-
-          this.chartObj = new Chart(ctx.getContext("2d"), {
-              type: "treemap",
-              data: {
-                  datasets: this.data.datasets,
-              },
-              options: {
-                  response: true,
-                  maintainAspectRatio: false,
-                  title: {
-                      display: true,
-                      text: ""
-                  },
-                  legend: {
-                      display: false
-                  },
-
-                  tooltips: {
-                      callbacks: {
-                          title: function (item, data) {
-                              return;
-                          },
-                          label: (item, data) => {
-                              let label = ''
-                              let dataset = data.datasets[item.datasetIndex];
-                              let dataItem;
-                              if (!this.data.hasGroup) {
-                                  dataItem = dataset.data[item.index]._data
-                                  label = dataItem[this.data.groupKey] + "(" + dataItem[dataset.key] + ")"
-                              } else {
-                                  dataItem = dataset.data[item.index]._data
-                                  /!*
-
-                                  console.log(dataItem);
-                                  if (!dataItem || !dataset.groups) return;
-                                  for (let j = 0; j < dataItem.children.length; j++) {
-                                      for (let i = 0; i < dataset.groups.length; i++) {
-                                          label += dataItem.children[j][dataset.groups[i]] + " "
-                                      }
-                                  }*!/
-                                  label += " (" + dataItem[dataset.key] + ")"
-                              }
-
-                              return label
-                          }
-                      }
-                  }
-              }
-          });
-      }
-  */
     getDataChart() {
         let {datasets, labels, config} = super.getDataChart()
         let grupos0 = new Set()
@@ -347,6 +286,27 @@ export class iBoardTreeMap extends iboardBaseChart {
 
     calcScaleOpacity(root) {
         return this.calcScaleGroups(root, 0.5, 1)
+    }
+    getTooltipSelector(){
+        return d3.select("#tooltip_" + this.props.chart.id);
+    }
+    showTooltip(event,d) {
+        const tooltip = this.getTooltipSelector()
+        tooltip
+            .style("left", `${event.pageX}px`)
+            .style("top", `${event.pageY-70}px`)
+            .style("display", "inline-block")
+            .html(`Total: ${d.value}`);
+    }
+    moveTooltip(event) {
+        const tooltip = this.getTooltipSelector()
+        tooltip
+            .style("left", `${event.pageX}px`)
+            .style("top", `${event.pageY}px`);
+    }
+    hideTooltip() {
+        const tooltip = this.getTooltipSelector()
+        tooltip.style("display", "none");
     }
 
 }
