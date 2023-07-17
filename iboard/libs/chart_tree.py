@@ -11,11 +11,7 @@ class ChartTree(ChartBar, Operations):
     """"   """
 
     def __init__(self, builder):
-        self.data.update({
-            'labels': [],
-            'datasets': [],
-        })
-        self._builder = builder
+        super(ChartTree, self).__init__(builder)
 
     def set_values(self):
         self.data['config'] = {

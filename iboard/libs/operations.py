@@ -41,6 +41,8 @@ class Operations:
         return self
 
     def get_agg_name(self):
+        if self._builder.operation_model_1 != 'count':
+            return self._builder.model_field_1.name
         return self.field_name + '_count'
 
     def order_by(self):
@@ -85,9 +87,10 @@ class Operations:
         return self
 
     def set_values_selection(self):
+
         self.data['title'] = self._builder.model_field_group_by_1.field_description
         self.data['datasets'].append(self.get_blank_dataset(self.data['title']))
-        self.data['datasets'][0]['data'] = self.results.values()
+        self.data['datasets'][0]['data'] = self.results
         self.data['labels'] = self.options.values()
 
     def set_values_m2x(self):

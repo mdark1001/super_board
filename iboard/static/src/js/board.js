@@ -42,13 +42,13 @@ class Board extends Component {
             ],
         };
         await loadAssets(this.assets);
-        await loadAssets(
+        /*await loadAssets(
             {
                 jsLibs: [
-                    "https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@0.2.3",
+                    //"https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@0.2.3",
                 ]
             }
-        )
+        )*/
     }
 
     async willStart() {

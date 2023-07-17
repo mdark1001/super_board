@@ -67,6 +67,7 @@
         >
             <t t-set-slot="content">
                 <div class="toolTip" t-attf-id="tooltip_{{ props.chart.id }}"/>
+
                 <svg t-attf-id="chart_{{ props.chart.id }}"/>
             </t>
         </GenericContainerBaseChart>
@@ -115,7 +116,7 @@
                 <div class="row">
                 <div class="col-12 ml-1" t-attf-id="chart_body_{{props.slots.chart.id}}">
                 </div>
-                    <div class="col-12">
+                    <div class="w-100" t-attf-id="content_{{props.slots.chart.id}}">
                         <t t-slot="content"/>
                 </div>
             </div>

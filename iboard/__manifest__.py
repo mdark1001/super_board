@@ -8,6 +8,7 @@
     'website': 'https://oohel.net',
     'license': 'GPL-3',
     'depends': [
+        'mail',
         'jsonifier',
     ],
     'data': [
@@ -25,6 +26,7 @@
         'data/colors1.xml',
         'data/colors2.xml',
         'data/colors3.xml',
+        'data/colors4.xml',
     ],
     'demo': [
 

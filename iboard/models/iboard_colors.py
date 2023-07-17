@@ -28,6 +28,7 @@ class IboardConfigColor(models.Model):
     _name = 'iboard.config.color'
     _description = "iBoard/Paleta-color"
     _rec_name = 'color'
+    _order = 'order ASC'
 
     color = fields.Char(
         string='Color',
@@ -38,4 +39,9 @@ class IboardConfigColor(models.Model):
         comodel_name='iboard.config.palette',
         string='Paleta de color',
         required=True,
+    )
+    order = fields.Integer(
+        string='Orden',
+        required=True,
+        default=1,
     )

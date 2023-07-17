@@ -225,6 +225,14 @@ class iChart(models.Model):
                 'typeTooltip': 'tooltip',
                 'showTotal': False,
             })
+        if chart_type == 'tree':
+            data.update({
+                'showTotal': False,
+                'showLabels': True,
+                'filterByAThreshold': 1,
+                'textColor': 'white',
+                'textColorTotal': 'white',
+            })
         return json.dumps(data, indent=6)
 
     def get_values_selection(self, model_name, field):

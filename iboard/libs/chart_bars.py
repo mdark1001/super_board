@@ -13,10 +13,9 @@ class ChartBar(ChartBase, Operations):
     """"   """
     options_2: dict = None
     field_name_2: str = None
-    sum_groups = defaultdict(int)
 
     def __init__(self, builder):
-
+        self.sum_groups = defaultdict(int)
         self.data.update({
             'labels': [],
             'datasets': [],
@@ -44,11 +43,13 @@ class ChartBar(ChartBase, Operations):
 
     def order_by(self):
         if not self.has_subgroup:
-            return super(_builderBar, self).order_by()
+            return super(ChartBar, self).order_by()
         return self
 
     def get_agg_name(self):
         if self.has_subgroup:
+            if self._builder.operation_model_1 != 'count':
+                return self._builder.model_field_1.name
             return '__count'
         return super(ChartBar, self).get_agg_name()
 
@@ -70,8 +71,9 @@ class ChartBar(ChartBase, Operations):
                 self._builder.model_field_group_by_1,
                 options=self.options
             )
-            self.sum_groups[field_1] = self.sum_groups[self.field_name] + group[key]
+
             if sub:
+                self.sum_groups[field_1] = self.sum_groups[field_1] + group[key]
                 field_2 = self._get_value_form_dict_results(
                     group,
                     self._builder.model_field_group_by_2,
@@ -92,24 +94,30 @@ class ChartBar(ChartBase, Operations):
                     }
                 )
         self.results = res
-        self._logger(self.results)
         return self
 
     def group_by(self):
         fields = [
             self.field_name,
         ]
+        groups = [
+            self.field_name,
+        ]
+        if self._builder.operation_model_1 != 'count':
+            fields.append(
+                self._builder.model_field_1.name + ':' + self._builder.operation_model_1
+            )
+            self._logger(fields)
         lazy = True
         if self.has_subgroup:
-            fields.append(
+            groups.append(
                 self.field_name_2
             )
             lazy = False
-        print(fields)
         self.groups = self._builder.getModel().read_group(
             domain=self._builder.get_domain(),
             fields=fields,
-            groupby=fields,
+            groupby=groups,
             lazy=lazy,
         )
 
@@ -120,6 +128,8 @@ class ChartBar(ChartBase, Operations):
 
     def set_values(self):
         if not self.has_subgroup:
+            self._logger("--" * 100)
+            self._logger(self.results)
             return super(ChartBar, self).set_values()
 
         datasets = []
@@ -148,19 +158,16 @@ class ChartBar(ChartBase, Operations):
         labels = list(set([p[self.field_name] for p in self.results]))
         if not self._builder.order_by:
             return labels
-        key = 1
+
         reverse = False if self._builder.order_by == 'asc' else True
-        if not self.has_subgroup:
-            pass
 
         labels = sorted(self.sum_groups.items(), key=lambda x: x[1], reverse=reverse)
-        print(labels)
         return list(map(lambda s: s[0], labels))
 
     def _get_value_form_dict_results(self, group, field, options):
         f = group[field.name]
-        self._logger(field.ttype)
-        self._logger(type(f))
+        self._logger(f)
+
         if field.ttype in ('many2one', 'many2many'):
             return str(f[1]) if f else 'Indefinido'
         else:

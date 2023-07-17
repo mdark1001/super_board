@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="palette_4" model="iboard.config.palette">
+            <field name="name">Deep Purple</field>
+        </record>
+        <record id="palette_color_4_1" model="iboard.config.color">
+            <field name="color">#7A91BC</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_2" model="iboard.config.color">
+            <field name="color">#7D83B4</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_3" model="iboard.config.color">
+            <field name="color">#8374A9</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_4" model="iboard.config.color">
+            <field name="color">#89649A</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_5" model="iboard.config.color">
+            <field name="color">#8F5487</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_6" model="iboard.config.color">
+            <field name="color">#924371</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_7" model="iboard.config.color">
+            <field name="color">#BC808D</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+        <record id="palette_color_4_8" model="iboard.config.color">
+            <field name="color">#854E5B</field>
+            <field name="palette_id" ref="palette_4"/>
+        </record>
+    </data>
+</odoo>
