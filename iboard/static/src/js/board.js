@@ -30,9 +30,7 @@ class Board extends Component {
             jsLibs: [
                 "https://d3js.org/d3.v7.min.js",
                 "/iboard/static/src/js/node_modules/gridstack/dist/es5/gridstack-all.js",
-                "https://cdn.jsdelivr.net/npm/chart.js@2.9.3",
-
-                //
+                "https://cdn.jsdelivr.net/npm/chart.js",
             ],
             cssLibs: [
                 "/iboard/static/src/js/node_modules/gridstack/dist/gridstack.min.css",
@@ -42,13 +40,7 @@ class Board extends Component {
             ],
         };
         await loadAssets(this.assets);
-        /*await loadAssets(
-            {
-                jsLibs: [
-                    //"https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@0.2.3",
-                ]
-            }
-        )*/
+
     }
 
     async willStart() {

@@ -1,0 +1,16 @@
+div.colored {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    overflow: hidden;
+
+}
+
+input.color-input[type="color"] {
+    border: 0;
+    padding: 1px;
+    width: 200%;
+    height: 200%;
+    cursor: pointer;
+    transform: translate(-25%, -25%)
+}

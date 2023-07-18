@@ -17,9 +17,9 @@
                             <page name="page_colors" string="Colores">
                                 <group>
                                     <field name="color_ids">
-                                        <tree>
+                                        <tree editable="bottom">
                                             <field name="order" widget="handle"/>
-                                            <field name="color"/>
+                                            <field name="color" widget="iboard_color"/>
                                         </tree>
                                     </field>
                                 </group>

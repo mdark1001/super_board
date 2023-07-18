@@ -8,7 +8,7 @@ export class iBoardTreeMap extends iboardBaseChart {
         super.setup();
         console.log(this.colors);
         this.state.margin = {
-            top: 10,
+            top: 1,
             right: 10,
             bottom: 10,
             left: 10

@@ -32,11 +32,13 @@
 
     ],
     'assets': {
-        'assets_common': [
+        'web.assets_common': [
+            'iboard/static/src/css/field_color.css',
         ],
         'web.assets_qweb': [
             'iboard/static/src/xml/board.xml',
             'iboard/static/src/xml/title.xml',
+            'iboard/static/src/xml/field_color.xml'
 
         ],
         'web.assets_backend': [
@@ -50,6 +52,8 @@
             'iboard/static/src/js/components/doughnut.js',
             'iboard/static/src/js/components/tree-map.js',
             'iboard/static/src/js/components/bar_chart.js',
+            # widgets
+            'iboard/static/src/js/widgets/field_color.js'
 
         ],
     },
