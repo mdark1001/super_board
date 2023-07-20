@@ -1,14 +1,13 @@
 /** @odoo-module **/
 import {iboardBaseChart} from "./base_chart";
 
-const {onMounted} = owl
+const {onMounted, onWillUpdateProps} = owl
 
 
 export class iBoardTreeMap extends iboardBaseChart {
 
     async setup() {
         super.setup();
-        console.log(this.colors);
         this.state.margin = {
             top: 1,
             right: 10,
@@ -18,6 +17,10 @@ export class iBoardTreeMap extends iboardBaseChart {
         this.state.node = false
         this.setFactorDeviceSize(1)
         onMounted(this.mounted)
+        onWillUpdateProps(nextProps => {
+            console.log(nextProps);
+            this.redrawSize()
+        });
     }
 
     mounted() {
@@ -36,7 +39,7 @@ export class iBoardTreeMap extends iboardBaseChart {
         let _h = this.getHeight()
         let _w = this.getWidth()
 
-        let width = (_w )
+        let width = (_w)
         let height = (_h - this.state.margin.top) - this.state.margin.bottom;
         this.startSVG(
             {

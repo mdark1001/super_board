@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-const {markRaw} = owl;
+const { onMounted} = owl;
 import {iboardBaseChart} from "./base_chart";
 
 export class iboardBarChart extends iboardBaseChart {
@@ -8,7 +8,7 @@ export class iboardBarChart extends iboardBaseChart {
 
     setup() {
         super.setup();
-
+        onMounted(this.mounted)
     }
 
     async willStart() {
@@ -16,7 +16,7 @@ export class iboardBarChart extends iboardBaseChart {
     }
 
     mounted() {
-        super.mounted();
+        // super.mounted();
         this.setFactorDeviceSize(1)
         this.draw()
     }
