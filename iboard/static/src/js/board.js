@@ -5,19 +5,20 @@
  * */
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
-import {loadAssets} from "@web/core/assets";
+import {loadJS, loadCSS} from "@web/core/assets";
 import {ChartFactory} from "./components/chart_factory";
 import {BOARD_MODEL} from "./common";
 import {iboarColors} from "./components/helpers";
 
 const {Component, useState, core, hooks, reactive} = owl;
-const {EventBus} = core;
+
+//const {EventBus} = core;
 
 class Board extends Component {
     async setup() {
         super.setup();
         this.editedChartSize = [];
-        let boardID = 3 // this.props.action.params?.board_id || this.props.action.params?.active_id
+        let boardID = 1 // this.props.action.params?.board_id || this.props.action.params?.active_id
         this.state = useState({
             'boardID': boardID,
             'charts': [],
@@ -39,12 +40,15 @@ class Board extends Component {
 
             ],
         };
-        await loadAssets(this.assets);
+        onWillStart(this.willStart)
+
+        // await Promise.all(this.assets.jsLibs)
 
     }
 
     async willStart() {
         await super.willStart();
+        // await  loadJS("")
         let charts = await this.callGetChartsFromDashboard();
         this.state.boardName = charts.name
         this.state.charts = charts.chart_ids
@@ -58,37 +62,37 @@ class Board extends Component {
     }
 
     startGrid() {
-        this.grid = GridStack.init({
-            disableResize: false,
-            minRow: 10,
-            staticGrid: this.state.staticGrid,
-            float: false,
-            animate: true,
-            cellHeight: 160,
-        })
-        // this.grid.load(this.state.gridConfig)
-        this.grid.on('dragstop', (event, el) => {
-            let node = el.gridstackNode; // {x, y, width, height, id, ....}
-            this.state.gridConfig[node.el.id.toString()] = {
-                'x': node.x,
-                'y': node.y,
-                'id': node.el.id
-            }
-        });
-        this.grid.on('resizestop', (event, el) => {
-            let node = el.gridstackNode; // {x, y, width, height, id, ....}
-            let chartID = parseInt(node.el.id)
-            let chartIndex = this.state.charts.findIndex(elem => elem.id == chartID)
-            this.state.charts[chartIndex].config.gsMinHeight = node.h;
-            this.state.charts[chartIndex].config.gsMinWidth = node.w;
-            this.state.charts[chartIndex].config.width = node.el.offsetWidth + 'px';
-            this.state.charts[chartIndex].config.height = node.el.offsetHeight + 'px';
-            this.editedChartSize.push({
-                    chartID: chartID,
-                    config: this.state.charts[chartIndex].config
-                }
-            )
-        })
+        /*   this.grid = GridStack.init({
+               disableResize: false,
+               minRow: 10,
+               staticGrid: this.state.staticGrid,
+               float: false,
+               animate: true,
+               cellHeight: 160,
+           })
+           // this.grid.load(this.state.gridConfig)
+           this.grid.on('dragstop', (event, el) => {
+               let node = el.gridstackNode; // {x, y, width, height, id, ....}
+               this.state.gridConfig[node.el.id.toString()] = {
+                   'x': node.x,
+                   'y': node.y,
+                   'id': node.el.id
+               }
+           });
+           this.grid.on('resizestop', (event, el) => {
+               let node = el.gridstackNode; // {x, y, width, height, id, ....}
+               let chartID = parseInt(node.el.id)
+               let chartIndex = this.state.charts.findIndex(elem => elem.id == chartID)
+               this.state.charts[chartIndex].config.gsMinHeight = node.h;
+               this.state.charts[chartIndex].config.gsMinWidth = node.w;
+               this.state.charts[chartIndex].config.width = node.el.offsetWidth + 'px';
+               this.state.charts[chartIndex].config.height = node.el.offsetHeight + 'px';
+               this.editedChartSize.push({
+                       chartID: chartID,
+                       config: this.state.charts[chartIndex].config
+                   }
+               )
+           })*/
 
     }
 
@@ -97,15 +101,18 @@ class Board extends Component {
     * */
 
     editLayout(ev) {
-        ev.preventDefault()
+        // ev.preventDefault()
         this.state.staticGrid = false
-        this.grid.setStatic(this.state.staticGrid)
+        if (this.grid)
+            this.grid.setStatic(this.state.staticGrid)
     }
 
     editLayoutSave() {
         this.state.staticGrid = true
-        this.grid.setStatic(this.state.staticGrid)
-        this.callServiceSaveLayout()
+        if (this.grid) {
+            this.grid.setStatic(this.state.staticGrid)
+            this.callServiceSaveLayout()
+        }
     }
 
     /**
@@ -144,7 +151,7 @@ class Board extends Component {
     }
 }
 
-Board.bus = new EventBus()
+//Board.bus = new EventBus()
 Board.template = 'iboard.Board'
 Board.components = {
     ChartFactory

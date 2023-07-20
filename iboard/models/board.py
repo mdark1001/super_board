@@ -37,11 +37,12 @@ class iBoard(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.client',
-            'tag': 'iboard_build',
-            'target': 'main',
+            'tag': 'iboard_action',
+            'name': 'Constructor de tableros',
+            'target': 'current',
             'params': {
                 'board_id': self.id,
-            }
+            },
         }
 
     @api.model
@@ -54,7 +55,7 @@ class iBoard(models.Model):
                 'id', 'title',
                 'chart_type', 'description',
                 'preview', ('palette_id', ('id',)), 'config',
-                'set_icon', 'icon', 'title_design', 'stacked', 'legend_position','order_by'
+                'set_icon', 'icon', 'title_design', 'stacked', 'legend_position', 'order_by'
             ))
         ]
         data = board.jsonify(one=True, parser=data)

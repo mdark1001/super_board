@@ -6,6 +6,7 @@ div.iboard-body {
     display: flex;
     flex-flow: column wrap;
     overflow-y: scroll;
+    background-color: #d9d9d933;
 }
 
 .indicator-card {
@@ -15,8 +16,9 @@ div.iboard-body {
 div.iboard_kanban {
     overflow: hidden !important;
 }
-div.iboard_base{
-     background-color: white !important;
+
+div.iboard_base {
+    background-color: white !important;
 }
 
 .o_kanban_view.o_kanban_ungrouped {
@@ -112,4 +114,7 @@ div.iboard_base{
     font: 12px sans-serif;
     padding: 5px;
     text-align: center;
+}
+.grid-stack-item{
+    background-color: white;
 }

@@ -27,16 +27,14 @@
                         </group>
                         <notebook>
                             <page name="page_charts" string="Indicadores">
-                                <group>
-                                    <field name="chart_ids" nolabel="1" context="{'default_board_id':id}">
-                                        <tree>
-                                            <field name="board_id" invisible="1"/>
-                                            <field name="orden" widget="handle"/>
-                                            <field name="title"/>
-                                            <field name="chart_type"/>
-                                        </tree>
-                                    </field>
-                                </group>
+                                <field name="chart_ids" nolabel="0" context="{'default_board_id':id}">
+                                    <tree>
+                                        <field name="board_id" invisible="1"/>
+                                        <field name="orden" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="chart_type"/>
+                                    </tree>
+                                </field>
                             </page>
                             <page name="page_config" string="Configuración">
                                 <group>

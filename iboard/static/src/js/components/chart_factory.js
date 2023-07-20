@@ -9,8 +9,6 @@ import {iBoardTreeMap} from "./tree-map";
 const {Component} = owl;
 
 export class ChartFactory extends Component {
-    ChartMAp = {}
-
     setup() {
         super.setup();
 
@@ -30,3 +28,9 @@ export class ChartFactory extends Component {
 }
 
 ChartFactory.template = 'iboard.ChartFactory'
+ChartFactory.componets = {
+    iboardTitle,
+    iboardDoughnutChart,
+    iboardBarChart,
+    iBoardTreeMap,
+}

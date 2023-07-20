@@ -33,11 +33,5 @@
                   sequence="5"
         />
 
-        <record id="iboard_build_action" model="ir.actions.client">
-            <field name="name">Constructor de tableros</field>
-            <field name="tag">iboard_build</field>
-            <field name="target">main</field>
-        </record>
-
     </data>
 </odoo>

@@ -2,14 +2,11 @@
 
 
 
-const {Component, useState} = owl;
-const {onWillUpdateProps} = owl.hooks
+const {Component, useState,onWillUpdateProps} = owl;
 import {useService} from "@web/core/utils/hooks";
 
-const {EventBus} = owl.core;
+//const {EventBus} = owl.core;
 
-
-const {useExternalListener} = owl.hooks;
 
 class GenericContainerBaseChart extends Component {
     static template = 'GenericContainerBaseChart'
@@ -140,7 +137,7 @@ export class iboardBaseChart extends Component {
 }
 
 iboardBaseChart.template = 'iboard.BaseChart'
-iboardBaseChart.bus = new EventBus()
+//iboardBaseChart.bus = new EventBus()
 iboardBaseChart.components = {
     GenericContainerBaseChart
 }

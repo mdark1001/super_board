@@ -35,17 +35,14 @@
         'web.assets_common': [
             'iboard/static/src/css/field_color.css',
         ],
-        'web.assets_qweb': [
-            'iboard/static/src/xml/board.xml',
-            'iboard/static/src/xml/title.xml',
-            'iboard/static/src/xml/field_color.xml'
+        'web.assets_backend': [
 
         ],
         'web.assets_backend': [
             'iboard/static/src/js/common.js',
             'iboard/static/src/js/components/helpers.js',
             'iboard/static/src/js/components/plugins.js',
-            'iboard/static/src/js/board.js',
+            'iboard/static/src/js/board_action.js',
             'iboard/static/src/js/components/chart_factory.js',
             'iboard/static/src/js/components/base_chart.js',
             'iboard/static/src/js/components/title_chart.js',
@@ -53,7 +50,11 @@
             'iboard/static/src/js/components/tree-map.js',
             'iboard/static/src/js/components/bar_chart.js',
             # widgets
-            'iboard/static/src/js/widgets/field_color.js'
+            'iboard/static/src/js/widgets/field_color.js',
+            #
+            'iboard/static/src/xml/board.xml',
+            'iboard/static/src/xml/title.xml',
+            'iboard/static/src/xml/field_color.xml'
 
         ],
     },

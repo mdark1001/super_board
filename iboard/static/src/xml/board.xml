@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
   <t t-name="iboard.Board" owl="1">
-      <div class="grid">
+      <div class="">
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
           <link rel="preconnect" href="https://fonts.gstatic.com"/>
           <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&amp;display=swap"
@@ -11,18 +11,21 @@
 
           <div class="o_control_panel">
               <div class="row">
-          <div class="col-12">
-                        <span id="ks_dashboard_title_label" class="ks_am_element">
-                            <t t-esc="state.boardName"/>
-                        </span>
-              <t t-call="iboard.BoardHeaderOptions"/>
-              </div>
+                  <div class="col-sm-6 col-xs-12">
+                                <span id="ks_dashboard_title_label" class="ks_am_element">
+                                    <t t-out="state.boardName"/>
+                                </span>
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                        <t t-call="iboard.BoardHeaderOptions"/>
+                  </div>
           </div>
        </div>
           <div class="iboard-body">
               <div class="grid-stack">
-                  <t t-foreach="state.charts" t-as="chart">
                     <ChartFactory
+                            t-foreach="state.charts"
+                            t-as="chart"
                             t-key="chart.id"
                             chart="chart"
                             layout="state.gridConfig"
@@ -30,7 +33,6 @@
                             t-on-resize_chart="resize_chart"
 
                     />
-                 </t>
               </div>
         </div>
       </div>
@@ -45,17 +47,24 @@
               <button type="button"
                       class="btn btn-outline-primary btn-sm float-right ml-2"
                       t-att-class="state.staticGrid ? '':'d-none'"
-                      t-on-click="editLayout()">
+                      t-on-click="editLayout">
                 <i class="fa fa-edit"/>
                   Editar layout
             </button>
          <button type="button"
-                 class="btn btn-outline-primary btn-sm float-right"
+                 class="btn btn-outline-info btn-sm float-right ml-2"
+                 t-att-class="state.staticGrid ? '':'d-none'"
+                 t-on-click="addChart">
+                <i class="fa fa-area-chart"/>
+             Agregar gráfica
+            </button>
+         <button type="button"
+                 class="btn btn-outline-secondary btn-sm float-right"
                  t-att-class="state.staticGrid ? 'd-none':''"
-                 t-on-click="editLayoutSave()">
+                 t-on-click="(ev)=>this.editLayoutSave(ev)">
                     <i class="fa fa-edit"/>
              Guardar layout
-                </button>
+         </button>
 
      </div>
     </t>

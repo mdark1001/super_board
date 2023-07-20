@@ -1,6 +1,8 @@
 /** @odoo-module **/
 import {iboardBaseChart} from "./base_chart";
 
+const {onMounted} = owl
+
 
 export class iBoardTreeMap extends iboardBaseChart {
 
@@ -15,10 +17,11 @@ export class iBoardTreeMap extends iboardBaseChart {
         }
         this.state.node = false
         this.setFactorDeviceSize(1)
+        onMounted(this.mounted)
     }
 
     mounted() {
-        super.mounted();
+        //super.mounted();
         this.draw()
     }
 
@@ -33,7 +36,7 @@ export class iBoardTreeMap extends iboardBaseChart {
         let _h = this.getHeight()
         let _w = this.getWidth()
 
-        let width = (_w * 1.2)
+        let width = (_w )
         let height = (_h - this.state.margin.top) - this.state.margin.bottom;
         this.startSVG(
             {
@@ -147,7 +150,7 @@ export class iBoardTreeMap extends iboardBaseChart {
             })
             .attr("x", d => (d.x0 + d.x1) / 2)
             .attr("y", d => (d.y0 + d.y1) / 2)
-            .attr("class","indicator-body")
+            .attr("class", "indicator-body")
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
@@ -167,7 +170,7 @@ export class iBoardTreeMap extends iboardBaseChart {
             .attr('class', "total")
             .attr("x", d => (d.x0 + d.x1) / 2)
             .attr("y", d => ((d.y0 + d.y1) / 2) + (fontSize(d)))
-            .attr("class","indicator-body")
+            .attr("class", "indicator-body")
             .attr("dy", "0.35em")
             .style("text-anchor", "middle")
             .style("font-size", fontSize)
@@ -193,7 +196,7 @@ export class iBoardTreeMap extends iboardBaseChart {
                 return d.data.name
             })
             .attr("font-size", "19px")
-            .attr("class","indicator-body")
+            .attr("class", "indicator-body")
             .attr("fill", function (d) {
                 return "gray"
             })
@@ -290,25 +293,29 @@ export class iBoardTreeMap extends iboardBaseChart {
     calcScaleOpacity(root) {
         return this.calcScaleGroups(root, 0.5, 1)
     }
-    getTooltipSelector(){
+
+    getTooltipSelector() {
         return d3.select("#tooltip_" + this.props.chart.id);
     }
-    showTooltip(event,d) {
+
+    showTooltip(event, d) {
         console.log(d);
         let key = this.data.config.key
         const tooltip = this.getTooltipSelector()
         tooltip
             .style("left", `${event.pageX}px`)
-            .style("top", `${event.pageY-100}px`)
+            .style("top", `${event.pageY - 100}px`)
             .style("display", "inline-block")
             .html(`${d.data[this.data.config.groups[0]]} - ${d.data[this.data.config.groups[1]]} : ${d.data[key]}`);
     }
+
     moveTooltip(event) {
         const tooltip = this.getTooltipSelector()
         tooltip
             .style("left", `${event.pageX}px`)
             .style("top", `${event.pageY}px`);
     }
+
     hideTooltip() {
         const tooltip = this.getTooltipSelector()
         tooltip.style("display", "none");
