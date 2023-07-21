@@ -124,7 +124,7 @@ export class iboardBaseChart extends Component {
 
      getChartOptions() {
         let config = {
-            responsive: true,
+            responsive: false,
             legend: {
                 position: this.props.chart.legend_position // place legend on the right side of chart
             },

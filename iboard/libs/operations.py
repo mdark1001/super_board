@@ -31,12 +31,13 @@ class Operations:
 
     def group_by(self):
         date_subgroup = self.get_date_agg()
-
+        _limit = self.get_limit()
         self.groups = self._builder.getModel().read_group(
             domain=self._builder.get_domain(),
             fields=[self.field_name],
             groupby=[self.field_name + date_subgroup],
-            lazy=True
+            lazy=True,
+            limit=_limit,
         )
         return self
 
@@ -44,6 +45,11 @@ class Operations:
         if self._builder.operation_model_1 != 'count':
             return self._builder.model_field_1.name
         return self.field_name + '_count'
+
+    def get_limit(self):
+        if self._builder.limit > 0:
+            return self._builder.limit
+        return False
 
     def order_by(self):
         if self._builder.order_by and self.groups:
@@ -90,7 +96,7 @@ class Operations:
 
         self.data['title'] = self._builder.model_field_group_by_1.field_description
         self.data['datasets'].append(self.get_blank_dataset(self.data['title']))
-        self.data['datasets'][0]['data'] = self.results
+        self.data['datasets'][0]['data'] = self.results.values()
         self.data['labels'] = self.options.values()
 
     def set_values_m2x(self):

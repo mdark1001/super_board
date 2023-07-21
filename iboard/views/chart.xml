@@ -61,6 +61,9 @@
                                     </group>
                                     <group string="Opciones" name="opt_group">
                                         <field name="order_by"/>
+                                        <field name="limit"
+                                               attrs="{'invisible':[('chart_type','=','title')]}"
+                                        />
                                     </group>
                                 </group>
                                 <group string="Filtro">
@@ -74,7 +77,11 @@
                             <page name="page_appearance" string="Estilo">
                                 <group>
                                     <field name="palette_id"/>
-                                    <field name="stacked" widget="boolean_toggle"/>
+                                    <field name="bar_orientation"
+                                           attrs="{'invisible':[('chart_type','not in',('bar',))]}"/>
+                                    <field name="stacked"
+                                           attrs="{'invisible':[('chart_type','not in',('bar',))]}"
+                                           widget="boolean_toggle"/>
                                     <field name="legend_position" widget="radio"/>
                                     <field name="set_icon"/>
                                     <field name="icon"
@@ -85,9 +92,8 @@
                                     />
                                 </group>
                                 <group>
-                                    <pre>
-                                        <field name="config"/>
-                                    </pre>
+
+                                    <field name="config"/>
                                 </group>
                             </page>
                         </notebook>

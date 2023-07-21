@@ -2,7 +2,7 @@
 
 
 import {iboardBarChart} from "./bar_chart";
-import {iboardTitle} from "./title_chart";
+import {iboardTitle} from "./title";
 import {iboardDoughnutChart} from "./doughnut";
 import {iBoardTreeMap} from "./tree-map";
 

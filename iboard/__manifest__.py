@@ -43,12 +43,13 @@
             'iboard/static/src/js/components/helpers.js',
             'iboard/static/src/js/components/plugins.js',
             'iboard/static/src/js/board_action.js',
-            'iboard/static/src/js/components/chart_factory.js',
-            'iboard/static/src/js/components/base_chart.js',
-            'iboard/static/src/js/components/title_chart.js',
+            'iboard/static/src/js/components/factory.js',
+            'iboard/static/src/js/components/base.js',
+            'iboard/static/src/js/components/title.js',
             'iboard/static/src/js/components/doughnut.js',
+            'iboard/static/src/js/components/bars.js',
             'iboard/static/src/js/components/tree-map.js',
-            'iboard/static/src/js/components/bar_chart.js',
+
             # widgets
             'iboard/static/src/js/widgets/field_color.js',
             #

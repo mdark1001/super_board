@@ -11,7 +11,7 @@ import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {loadCSS, loadJS} from "@web/core/assets";
 import {BOARD_MODEL} from "./common";
-import {ChartFactory} from "./components/chart_factory";
+import {FactoryChart} from "./components/factory";
 
 export class iBoardAction extends Component {
     setup() {
@@ -87,10 +87,11 @@ export class iBoardAction extends Component {
             let node = el.gridstackNode; // {x, y, width, height, id, ....}
             let chartID = parseInt(node.el.id)
             let chartIndex = this.state.charts.findIndex(elem => elem.id == chartID)
-            this.state.charts[chartIndex].config.gsMinHeight = node.h;
-            this.state.charts[chartIndex].config.gsMinWidth = node.w;
-            this.state.charts[chartIndex].config.width = node.el.offsetWidth + 'px';
-            this.state.charts[chartIndex].config.height = node.el.offsetHeight + 'px';
+            console.log(node);
+            this.state.charts[chartIndex].config.gsHeight = node.h;
+            this.state.charts[chartIndex].config.gsWidth = node.w;
+            this.state.charts[chartIndex].config.width = (node.el.offsetWidth * .9) + 'px';
+            this.state.charts[chartIndex].config.height = (node.el.offsetHeight * .8) + 'px';
             this.editedChartSize.push({
                     chartID: chartID,
                     config: this.state.charts[chartIndex].config
@@ -179,7 +180,7 @@ export class iBoardAction extends Component {
 
 iBoardAction.template = 'iboard.Board'
 iBoardAction.components = {
-    ChartFactory
+    FactoryChart
 }
 registry.category("actions").add('iboard_action', iBoardAction)
 

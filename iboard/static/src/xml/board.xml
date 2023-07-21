@@ -23,7 +23,7 @@
        </div>
           <div class="iboard-body">
               <div class="grid-stack">
-                    <ChartFactory
+                    <FactoryChart
                             t-foreach="state.charts"
                             t-as="chart"
                             t-key="chart.id"
@@ -41,6 +41,8 @@
         <t t-component="getChart"
            t-props="props"
         />
+
+
 </t>
     <t t-name="iboard.BoardHeaderOptions" owl="1">
      <div class="">
@@ -68,6 +70,47 @@
 
      </div>
     </t>
+
+    <t t-name="iboard.FactoryChar" owl="1">
+               <div class="grid-stack-item"
+                    t-att-gs-h="props.chart.config.gsHeight"
+                    t-att-gs-w="props.chart.config.gsWidth"
+                    t-att-gs-min-h="props.chart.config.gsMinHeight"
+                    t-att-gs-min-w="props.chart.config.gsMinWidth"
+                    t-att-gs-max-h="props.chart.config.gsMaxHeight"
+                    t-att-id="props.chart.id"
+                    t-att-gs-x="props.layout[props.chart.id].x"
+                    t-att-gs-y="props.layout[props.chart.id].y"
+               >
+        <div class="iboard_kanban iboard_base grid-stack-item-content">
+
+            <div class="oe_kanban_card oe_kanban_global_click o_kanban_record ">
+                <div class="row">
+                    <div class="col-1">
+                      <t t-call="iboard.MenuContainer"/>
+                    </div>
+                    <div class="col-10">
+                    <h4 class="o_kanban_record_title p-1 indicator-card-title">
+                                <span>
+                                    <t t-esc="props.chart.title"/>
+                                </span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-12 ml-1" t-attf-id="chart_body_{{props.chart.id}}">
+                </div>
+                    <div class="w-100"
+                         t-attf-id="content_{{props.chart.id}}"
+                         t-ref="element"
+                    >
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </t>
+
 
     <t t-name="iboard.BaseChart" owl="1">
         <GenericContainerBaseChart
@@ -137,30 +180,21 @@
 
     <t t-name="iboard.MenuContainer" owl="1">
     <div class="dropdown" modifiers="{}">
-        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
-           data-display="static" href="#" aria-label="Menú desplegable" title="Menú desplegable"
-           modifiers="{}">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="fa fa-ellipsis-v" modifiers="{}"></span>
-    </a>
-        <div class="dropdown-menu" role="menu" modifiers="{}">
-        <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-           modifiers="{}" data-type="edit" href="#"
-           t-on-click="editChart"
-        >Editar</a>
-            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-               modifiers="{}" data-type="object" data-name="action_send_survey"
-               href="#">Compartir
-        </a>
-            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-               modifiers="{}" data-type="delete" href="#">Eliminar
-        </a>
-            <div role="separator" class="dropdown-divider" modifiers="{}"></div>
-            <a role="menuitem" class="dropdown-item oe_kanban_action oe_kanban_action_a"
-               modifiers="{}" data-type="delete" href="#">Ajustes
-        </a>
+    </button>
+        <ul class="dropdown-menu">
+            <li>
+                <button class="dropdown-item" type="button"
+                        t-on-click="editChart">
+                Editar
+            </button>
+            </li>
+            <li><button class="dropdown-item" type="button">Another action</button></li>
+            <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
     </div>
-</div>
 </t>
 
 
-        </templates>
+</templates>

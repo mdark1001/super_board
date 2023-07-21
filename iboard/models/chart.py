@@ -129,6 +129,11 @@ class iChart(models.Model):
         related='model_field_group_by_2.ttype',
         store=True,
     )
+    limit = fields.Integer(
+        string='Límite',
+        required=False,
+        default=0
+    )
 
     # apariencia
     palette_id = fields.Many2one(
@@ -160,6 +165,15 @@ class iChart(models.Model):
         ],
         required=False,
         default='d0'
+    )
+    bar_orientation = fields.Selection(
+        string='Orientación',
+        selection=[
+            ('vertical', 'Vertical'),
+            ('horizontal', 'Horizontal'),
+        ],
+        default='vertical',
+        required=True,
     )
 
     stacked = fields.Boolean(
@@ -212,9 +226,16 @@ class iChart(models.Model):
         data = {
             'width': '250px',
             'height': '250px',
-            'gsMinWidth': 3,
-            'gsMinHeight': 1,
+            'gsHeight': 1,  # ancho por default
+            'gsWidth': 2,  # alto por default
+            'gsMinHeight': 1,  # minimo
+            'gsMinWidth': 2,  # minimo,
+            'gsMaxHeight': 11,
         }
+        if chart_type == 'title':
+            data.update({
+                'gsMaxHeight': 1
+            })
         if chart_type == 'pie':
             data.update({
                 'width': '450px',
@@ -222,8 +243,11 @@ class iChart(models.Model):
                 'filter_empty': True,
                 'gsMinWidth': 3,
                 'gsMinHeight': 3,
+                'gsHeight': 3,  # ancho por default
+                'gsWidth': 3,  # alto por default
                 'typeTooltip': 'tooltip',
                 'showTotal': False,
+
             })
         if chart_type == 'tree':
             data.update({
@@ -232,6 +256,10 @@ class iChart(models.Model):
                 'filterByAThreshold': 1,
                 'textColor': 'white',
                 'textColorTotal': 'white',
+                'gsMinWidth': 3,
+                'gsMinHeight': 3,
+                'gsHeight': 4,  # ancho por default
+                'gsWidth': 4,  # alto por default
             })
         return json.dumps(data, indent=6)
 
@@ -249,10 +277,7 @@ class iChart(models.Model):
         :doc-author: Trelent
         """
         # print(request.env.user.lang)
-        _options = self.env['ir.translation'].with_context(lang=self.env.user.lang).get_field_selection(
-            model_name,
-            field
-        )
+        _options = self.env[model_name]._fields[field]._description_selection(self.env)
         return {o[0]: o[1] for o in _options}
 
     def getModel(self):

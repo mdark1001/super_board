@@ -1,72 +1,59 @@
 /** @odoo-module **/
-import {iboardBaseChart} from "./base_chart";
+
+
+import {iBoardBase} from "./base";
 import {doughnutLabel} from "./plugins";
 
-export class iboardDoughnutChart extends iboardBaseChart {
-    chartType = 'bar'
 
-    setup() {
-        super.setup();
-        console.log(this);
-
-    }
-
-    async willStart() {
-        super.willStart();
-    }
-
-    mounted() {
-        super.mounted();
-        this.setFactorDeviceSize(1)
-        this.draw()
-    }
-
-    redrawSize() {
-        this.chartObj.update()
+export class Doughnut extends iBoardBase {
+    constructor(element, data, colors) {
+        super(data, colors);
+        this.el = element.el
+        this.chartSelextor = d3.select(this.el)
+            .append("canvas")
+            .attr("id", "canvas_" + this.data.id)
+            .attr("width", this.getWidth())
+            .attr("height", this.getHeight())
     }
 
     draw() {
         super.draw();
-        let w = this.getWidth()
-        let h = this.getHeight()
-        this.data = this.getDataChart()
-        const ctx = document.getElementById(this.getChartID());
+        const data = this.getDataChart()
+
+        const ctx = document.getElementById("canvas_" + this.data.id);
         this.chartObj = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: this.data.labels,
-                datasets: this.data.datasets,
+                labels: data.labels,
+                datasets: data.datasets,
             },
             options: this.getChartOptions(),
             plugins: this.getPlugins()
         });
 
-        //  this.chartObj.canvas.parentNode.style.height = h + 'px';
-        //    this.chartObj.canvas.parentNode.style.width = w + 'px';
     }
 
-    getChartID() {
-        return 'chart_canvas_' + this.props.chart.id
+    redraw(data,) {
+        super.redraw(data);
+        d3.select("#canvas_" + this.data.id).html('')
+        this.draw()
     }
 
     getDataChart() {
         let {datasets, labels} = super.getDataChart()
         datasets[0]['backgroundColor'] = [];
-        for (let i = 0; i < labels.length; i++)
+        for (let i = 0; i < labels.length; i++) {
             datasets[0]['backgroundColor'].push(this.getPaletteItem(i))
+        }
         return {datasets, labels}
     }
 
-
-
     getPlugins() {
-        let plugins = []
-        if (this.props.chart.config.showTotal) {
+        let plugins = super.getPlugins()
+        if (this.data.config.showTotal) {
             plugins.push(doughnutLabel)
         }
         return plugins
     }
 
 }
-
-iboardDoughnutChart.template = 'iboard.ChartJS';
