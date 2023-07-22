@@ -119,6 +119,7 @@ class ChartBar(ChartBase, Operations):
             fields=fields,
             groupby=groups,
             lazy=lazy,
+            limit=self.get_limit(),
         )
 
         return self
