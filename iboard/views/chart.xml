@@ -74,6 +74,13 @@
                                     />
                                 </group>
                             </page>
+                            <page name="page_map_config" string="Mapa"
+                                  attrs="{'invisible':[('chart_type','!=','map')]}">
+                                <group string="Configuración del mapa">
+                                    <field name="geo_map_file_id"/>
+
+                                </group>
+                            </page>
                             <page name="page_appearance" string="Estilo">
                                 <group>
                                     <field name="palette_id"/>

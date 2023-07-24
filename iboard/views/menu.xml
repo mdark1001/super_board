@@ -25,11 +25,17 @@
                   name="Configuración"
                   parent="iboard_root"
                   sequence="100"/>
-        <!-- This Menu Item must have a parent and an action -->
         <menuitem id="iboard_config_palette_view_action_menu"
                   name="Paleta de colores"
                   parent="iboard_config"
                   action="iboard_config_palette_action"
+                  sequence="5"
+        />
+
+        <menuitem id="iboard_config_geo_map_view_action_menu"
+                  name="Archivos de mapas"
+                  parent="iboard_config"
+                  action="iboard_geo_map_action"
                   sequence="5"
         />
 

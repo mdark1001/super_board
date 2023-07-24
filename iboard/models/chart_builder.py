@@ -11,9 +11,7 @@ from odoo.addons.iboard.libs.chart_pie import ChartPie
 from odoo.addons.iboard.libs.chart_bars import ChartBar
 from odoo.addons.iboard.libs.chart_title import Title
 from odoo.addons.iboard.libs.chart_tree import ChartTree
-
-
-
+from odoo.addons.iboard.libs.chart_map import ChartMap
 from collections import abc
 
 
@@ -45,6 +43,8 @@ class ChartBuilder:
             self.chart_ob = ChartPie(chart)
         elif self.chart.chart_type == 'tree':
             self.chart_ob = ChartTree(chart)
+        elif self.chart.chart_type == 'map':
+            self.chart_ob = ChartMap(chart)
 
     def get_data(self):
         if not self.chart:
@@ -54,6 +54,3 @@ class ChartBuilder:
 
     def to_json(self):
         return json.dumps(self._data, default=list)
-
-
-

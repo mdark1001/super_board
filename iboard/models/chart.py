@@ -38,6 +38,7 @@ class iChart(models.Model):
             ('pie', 'Gráfico circular'),
             ('bar', 'Gráfico de barras'),
             ('tree', 'Mapas de árbol'),
+            ('map', 'Mapa'),
             ('text', 'Texto enriquecido'),
         ],
         required=True,
@@ -198,6 +199,13 @@ class iChart(models.Model):
             ('asc', 'Acescente'),
         ],
         required=False,
+    )
+    # map fields
+
+    geo_map_file_id = fields.Many2one(
+        comodel_name='iboard.geo.map',
+        string='Tipo de mapa',
+        required=False
     )
 
     def get_preview_chart_data(self):

@@ -10,7 +10,7 @@ import {Title} from "./title";
 import {Doughnut} from "./doughnut";
 import {Bars} from "./bars";
 import {TreeMap} from "./tree-map";
-
+import { Maps} from './maps.js'
 
 export class FactoryChart extends Component {
     _factory = {}
@@ -56,6 +56,12 @@ export class FactoryChart extends Component {
             )
         if (this.props.chart.chart_type === 'tree')
             this._factory = new TreeMap(
+                this.element,
+                this.props.chart,
+                this.props.colors,
+            )
+        if (this.props.chart.chart_type === 'map')
+            this._factory = new Maps(
                 this.element,
                 this.props.chart,
                 this.props.colors,

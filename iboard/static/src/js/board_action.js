@@ -35,6 +35,8 @@ export class iBoardAction extends Component {
                 "https://d3js.org/d3.v7.min.js",
                 "/iboard/static/src/js/node_modules/gridstack/dist/es5/gridstack-all.js",
                 "https://cdn.jsdelivr.net/npm/chart.js",
+                "https://d3js.org/d3-geo-projection.v2.min.js",
+                "http://d3js.org/topojson.v1.min.js"
             ],
             cssLibs: [
                 "/iboard/static/src/js/node_modules/gridstack/dist/gridstack.min.css",

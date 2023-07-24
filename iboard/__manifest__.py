@@ -20,6 +20,7 @@
         'views/chart.xml',
         # config
         'views/colors.xml',
+        'views/geo_map.xml',
         # menu
         'views/menu.xml',
         # data
@@ -35,9 +36,7 @@
         'web.assets_common': [
             'iboard/static/src/css/field_color.css',
         ],
-        'web.assets_backend': [
 
-        ],
         'web.assets_backend': [
             'iboard/static/src/js/common.js',
             'iboard/static/src/js/components/helpers.js',
@@ -49,12 +48,12 @@
             'iboard/static/src/js/components/doughnut.js',
             'iboard/static/src/js/components/bars.js',
             'iboard/static/src/js/components/tree-map.js',
+            'iboard/static/src/js/components/maps.js',
 
             # widgets
             'iboard/static/src/js/widgets/field_color.js',
             #
             'iboard/static/src/xml/board.xml',
-            'iboard/static/src/xml/title.xml',
             'iboard/static/src/xml/field_color.xml'
 
         ],

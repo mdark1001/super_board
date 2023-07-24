@@ -6,6 +6,7 @@
 
 from . import board
 from . import chart
+from . import geo_map
 from . import iboard_colors
 from . import helper
 

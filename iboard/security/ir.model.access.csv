@@ -5,3 +5,5 @@ all_access_iboard.config.palette,Acceso global,model_iboard_config_palette,,1,0,
 all_access_iboard.config.color,Acceso global,model_iboard_config_color,,1,0,0,0
 iboard_admin_access_iboard.config.palette,Acceso global,model_iboard_config_palette,iboard_admin,1,1,1,1
 iboard_admin_access_iboard.config.color,Acceso global,model_iboard_config_color,iboard_admin,1,1,1,1
+all_acess_iboard_map_geo,Acceso global,iboard.model_iboard_geo_map,,1,0,0,0
+admin_acess_iboard_map_geo,Acceso global para responsable,iboard.model_iboard_geo_map,iboard_admin,1,1,1,1
