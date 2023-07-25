@@ -1,11 +1,9 @@
 /**
  * @author: Miguel Cabrera Ramírez
  * @date: 10/05/2023
- * @description: Widget para tipo de campo O2M para mostrar en pantalla
- * la estructura de un odontograma
- * la captura, edición d del odontograma
+ * @description:
  * */
-odoo.define('apac.odontograma', function (require) {
+odoo.define('iboard.FieldColor', function (require) {
     "use strict";
     const AbstractField = require('web.AbstractFieldOwl');
     const {Component, useState} = owl;
@@ -15,10 +13,15 @@ odoo.define('apac.odontograma', function (require) {
         static  supportedFieldTypes = ["char"]
         static  template = 'iBoardFieldColor'
 
-        state = useState({
-            color: '#b4b4b4',
-            mode: 'readonly',
-        })
+        setup() {
+            alert("aaa")
+            super.setup();
+            this.state = useState({
+                color: '#b4b4b4',
+                mode: 'readonly',
+            })
+
+        }
 
         async willStart() {
             this.state.mode = this.props.options.mode;

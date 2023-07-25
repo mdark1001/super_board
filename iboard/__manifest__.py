@@ -28,6 +28,7 @@
         'data/colors2.xml',
         'data/colors3.xml',
         'data/colors4.xml',
+        'data/colors5.xml',
     ],
     'demo': [
 

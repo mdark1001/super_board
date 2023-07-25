@@ -21,7 +21,7 @@ export class iBoardAction extends Component {
         this.ui = useService("ui")
         this.actionService = useService("action");
         this.editedChartSize = [];
-        this.boardID = 1 // this.props.action.params?.board_id || this.props.action.params?.active_id
+        this.boardID =  this.props.action.params?.board_id || this.props.action.params?.active_id
         this.state = useState({
             'boardID': this.boardID,
             'charts': [],

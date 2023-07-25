@@ -33,6 +33,55 @@ class iBoard(models.Model):
         default="{}"
     )
 
+    menu_name = fields.Char(
+        string='Nombre del menú',
+        required=True,
+        default='Tablero'
+    )
+    menu_parent_id = fields.Many2one(
+        comodel_name='ir.ui.menu',
+        string='Menú padre',
+        required=True
+        # domain="[('action','=',False)]"
+    )
+    menu_id = fields.Many2one(
+        comodel_name='ir.ui.menu',
+        string='Menú',
+        required=False,
+        readonly=True,
+        # domain="[('action','=',False)]"
+    )
+    groups_ids = fields.Many2many(
+        comodel_name='res.groups',
+        string='Grupos de acceso'
+    )
+    action_id = fields.Many2one(
+        comodel_name='ir.actions.client',
+        string='Acción',
+        required=False
+    )
+
+    @api.model
+    def create(self, values):
+        res = super(iBoard, self).create(values)
+        # create action
+        action = {
+            'name': values['name'] + " Action",
+            'res_model': 'iboard.board',
+            'tag': 'iboard_action',
+            'params': {'board_id': res.id},
+        }
+        res.action_id = self.create_action(action)
+        res.menu_id = self.env['ir.ui.menu'].sudo().create({
+            'name': values['menu_name'],
+            'active': True,
+            'parent_id': values['menu_parent_id'],
+            'action': "ir.actions.client," + str(res.action_id.id),
+            'groups_id': res.groups_ids.ids,
+            'sequence': 10
+        })
+        return res
+
     def action_show_board(self):
         self.ensure_one()
         return {
@@ -91,3 +140,17 @@ class iBoard(models.Model):
             data[record['id']] = list(map(lambda s: s['color'], record['color_ids']))
 
         return data
+
+    def create_action(self, action):
+        return self.env['ir.actions.client'].sudo().create(action)
+
+    def unlink(self):
+        """
+         Drop menu and action too,
+        """
+        for record in self:
+            if record.action_id.exists():
+                record.action_id.unlink()
+            if record.menu_id:
+                record.menu_id.unlink()
+            super(iBoard, record).unlink()
