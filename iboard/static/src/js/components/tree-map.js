@@ -224,7 +224,7 @@ export class TreeMap extends iBoardBase {
     }
 
     getDataChart() {
-        let {datasets, labels, config} = super.getDataChart()
+        let {datasets, labels, config} = JSON.parse(JSON.stringify(this.data.data));
         let grupos0 = new Set()
         if (this.data.config?.filterByAThreshold) {
             datasets = datasets.filter(item => item[config.key] > this.data.config.filterByAThreshold)
@@ -291,7 +291,7 @@ export class TreeMap extends iBoardBase {
         const tooltip = this.getTooltipSelector()
         tooltip
             .style("left", `${event.clientX}px`)
-            .style("top", `${event.clientY-100}px`)
+            .style("top", `${event.clientY - 100}px`)
             .style("display", "inline-block")
             .html(label);
     }
@@ -300,7 +300,7 @@ export class TreeMap extends iBoardBase {
         const tooltip = this.getTooltipSelector()
         tooltip
             .style("left", `${event.clientX}px`)
-            .style("top", `${event.clientY-100}px`);
+            .style("top", `${event.clientY - 100}px`);
     }
 
     hideTooltip() {

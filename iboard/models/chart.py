@@ -137,6 +137,11 @@ class iChart(models.Model):
     )
 
     # apariencia
+    legend_name = fields.Char(
+        string='Etiqueta',
+        default='Total'
+    )
+
     palette_id = fields.Many2one(
         comodel_name='iboard.config.palette',
         string='Paleta de colores',

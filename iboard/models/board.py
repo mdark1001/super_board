@@ -104,7 +104,7 @@ class iBoard(models.Model):
                 'id', 'title',
                 'chart_type', 'description',
                 'preview', ('palette_id', ('id',)), 'config',
-                'bar_orientation',
+                'bar_orientation', 'legend_name',
                 'set_icon', 'icon', 'title_design', 'stacked', 'legend_position', 'order_by'
             ))
         ]

@@ -1,5 +1,10 @@
 ### Lista de cosas por implementar
-
+-
+- Editor de iconos de fontawesome
+- Agregar interactividad a las gráficas
+- Agregar filtros 
+- Agregar un editor de vistas/ consultas SQL 
+- Exportar gráficas.
 - Editor de Json o un edtor de opciones de las gráficas.
 - Paleta de colores customizable 
   - Aquí estaría buen en obtener un servicio para combinar colores de forma automatica. 

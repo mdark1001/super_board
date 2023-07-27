@@ -58,20 +58,37 @@ class Operations:
             self.groups.sort(reverse=reverse, key=lambda s: s[key])
         return self
 
-    def preparate_values(self):
-        if self.is_type_selection():
-            self._set_result_from_selection_groups()
+    def _get_value_form_dict_results(self, group, field, options):
+        f = group[field.name]
+        if field.ttype in ('many2one', 'many2many'):
+            return str(f[1]) if f else 'Indefinido'
         else:
-            pass
-        return self
+            if field.ttype in ('date', 'datetime'):
+                return f
+            return options.get(f, 'Indefinido')
+        return False
+
+    def preparate_values(self):
+        field_1 = self._builder.model_field_group_by_1
+        for group in self.groups:
+            group[field_1.name] = self._get_value_form_dict_results(
+                group,
+                field_1,
+                options=self.options
+            )
+
 
     def set_values(self):
-        if self._builder.model_field_group_1_ttype == 'selection':
-            self.set_values_selection()
-        elif self._builder.model_field_group_1_ttype in ('date', 'datetime',):
-            self.set_values_date_x()
-        if self._builder.model_field_group_1_ttype in ('many2one', 'many2many'):
-            self.set_values_m2x()
+        self.data['config'] = {
+            'key': self.get_agg_name(),
+            'groups': self.field_name
+        }
+        if self.has_subgroup:
+            self.data['config']['groups'] = [
+                self.field_name,
+                self.field_name_2
+            ]
+        self.data['datasets'] = self.groups
         return self
 
     def _set_result_from_selection_groups(self):
@@ -104,7 +121,7 @@ class Operations:
         self.data['datasets'].append(self.get_blank_dataset(self.data['title']))
         key = self.get_agg_name()
         for result in self.groups:
-            name = str(result[self.field_name][1]) if result[self.field_name] else 'Indefinido'
+            name = result[self.field_name] if result[self.field_name] else 'Indefinido'
             self.data['labels'].append(name)
             self.data['datasets'][0]['data'].append(result[key])
 

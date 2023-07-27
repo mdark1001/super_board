@@ -13,18 +13,6 @@ class ChartTree(ChartBar, Operations):
     def __init__(self, builder):
         super(ChartTree, self).__init__(builder)
 
-    def set_values(self):
-        self.data['config'] = {
-            'key': self.get_agg_name(),
-            'groups': self.field_name
-        }
-        if self.has_subgroup:
-            self.data['config']['groups'] = [
-                self.field_name,
-                self.field_name_2
-            ]
-        self.data['datasets'] = self.results
-        return self
 
     def compute(self):
         if self.has_subgroup:

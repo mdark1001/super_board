@@ -17,13 +17,17 @@ class ChartPie(ChartBase, Operations):
         })
         self._builder = builder
 
+    @property
+    def has_subgroup(self):
+        return False
+
     def compute(self):
         self.set_field_name()
         self.set_options()
         self.group_by()
         self.preparate_values()
         self.set_values()
-        self._logger(self.data)
+        # self._logger(self.data)
         return self
 
     def get_data(self):
