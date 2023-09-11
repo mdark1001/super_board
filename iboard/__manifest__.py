@@ -53,9 +53,11 @@
 
             # widgets
             'iboard/static/src/js/widgets/field_color.js',
+            'iboard/static/src/js/widgets/field_icon.js',
+            'iboard/static/src/js/widgets/icons.js',
             #
             'iboard/static/src/xml/board.xml',
-            'iboard/static/src/xml/field_color.xml'
+            'iboard/static/src/xml/widgets.xml'
 
         ],
     },

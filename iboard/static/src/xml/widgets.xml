@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="iBoardFieldColor" owl="1">
+        <div class="colored pull-right">
+            <input type="color"
+                   class="color-input"
+                   t-on-change.prevent.stop="(ev)=>this.onChangeColorUpdated(ev)"
+                   t-att-value="state.color"
+            />
+        </div>
+    </t>
+    <t t-name="iBoardFieldIcon" owl="1">
+        <div class="">
+            <span class="">
+                <i
+                        t-on-click="(ev)=>this.changeModalState(ev)"
+                        t-attf-class="fa-3x fa {{ state.icon }}"/>
+            </span>
+            <Dialog title="Icons"
+                    t-if="state.showModal"
+                    size="'medium'"
+                    onClosed="() => { state.showModal = false }"
+            >
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <input class="form-control"
+                               name="search"
+                               placeholder="Buscar ícono"
+                               autocomplete="false"
+                               t-on-keyup="_onFilterIcons"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                <t t-set="index" t-value="1"/>
+                    <t t-foreach="state.icons" t-as="icon" t-key="index">
+                    <div class="col-md-3 col-sm-4">
+
+                        <label t-on-click.prevent.stop="(ev)=>this._onSelectNewIcon(ev,icon)"
+                        >
+                             <i t-attf-class="fa fa-2x {{ icon['className'] }}"
+                             />
+                            <t t-esc="icon['name']"/>
+                        </label>
+                    </div>
+                        <t t-set="index" t-value="index + 1"/>
+                </t>
+                </div>
+            </Dialog>
+        </div>
+    </t>
+</templates>

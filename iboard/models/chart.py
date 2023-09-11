@@ -4,6 +4,7 @@
 @name:
 """
 import json
+from json import JSONDecodeError
 
 from odoo import api, fields, models
 from odoo.tools.convert import safe_eval
@@ -213,6 +214,7 @@ class iChart(models.Model):
         required=False
     )
 
+    @api.depends('chart_type', 'model_name_1', 'domain_model_1', 'operation_model_1')
     def get_preview_chart_data(self):
         cb = ChartBuilder(self.env)
         for record in self:

@@ -1,43 +1,45 @@
+/** @odoo-module **/
 /**
  * @author: Miguel Cabrera Ramírez
  * @date: 10/05/2023
  * @description:
  * */
-odoo.define('iboard.FieldColor', function (require) {
-    "use strict";
-    const AbstractField = require('web.AbstractFieldOwl');
-    const {Component, useState} = owl;
-    const fieldRegistry = require('web.field_registry_owl');
 
-    class iBoardFieldColor extends AbstractField {
-        static  supportedFieldTypes = ["char"]
-        static  template = 'iBoardFieldColor'
 
-        setup() {
-            alert("aaa")
-            super.setup();
-            this.state = useState({
-                color: '#b4b4b4',
-                mode: 'readonly',
-            })
+import {Component, useState} from "@odoo/owl";
 
-        }
 
-        async willStart() {
-            this.state.mode = this.props.options.mode;
-            this.state.color = this.props.record.data.color || '#b4b4b4'
-        }
+import {registry} from "@web/core/registry";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
-        onChangeColorUpdated(ev) {
-            this._setValue(ev.target.value);
-        }
+class iBoardFieldColor extends Component {
+
+    setup() {
+        super.setup();
+        console.log(this.props);
+        this.state = useState({
+            color: this.props.value,
+            mode: this.props.readonly ? 'readonly' : '',
+        })
 
     }
 
-    fieldRegistry.add('iboard_color', iBoardFieldColor);
-    return {
-        iBoardFieldColor
+    onChangeColorUpdated(ev) {
+        this.state.color = ev.target.value;
+        this.props.update(ev.target.value, {
+            save: this.props.autosave
+        })
     }
 
+}
 
-})
+iBoardFieldColor.description = 'iBoard color selected';
+iBoardFieldColor.displayName = "Color"
+iBoardFieldColor.supportedTypes = ["char"];
+iBoardFieldColor.template = 'iBoardFieldColor';
+iBoardFieldColor.props = {
+    ...standardFieldProps,
+}
+
+registry.category("fields").add("icolor", iBoardFieldColor);
+

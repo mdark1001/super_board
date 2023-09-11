@@ -92,6 +92,7 @@
                                     <field name="legend_position" widget="radio"/>
                                     <field name="set_icon"/>
                                     <field name="icon"
+                                           widget="iboard_icon"
                                            attrs="{'invisible':[('set_icon','=',False)]}"
                                     />
                                     <field name="title_design"

@@ -18,7 +18,7 @@
                                 <field name="color_ids">
                                     <tree editable="bottom">
                                         <field name="order" widget="handle"/>
-                                        <field name="color" widget="iboard_color"/>
+                                        <field name="color" widget="icolor"/>
                                     </tree>
                                 </field>
                             </page>

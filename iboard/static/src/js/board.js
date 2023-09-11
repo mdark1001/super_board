@@ -161,3 +161,14 @@ Board.components = {
 
 
 registry.category("actions").add("iboard_build", Board);
+
+let icons = []
+$('.row .col-sm-4').each(function () {
+    let icon = $(this).find("a");
+    let className = icon.children("i.fa")[0].classList[1]
+    let name = icon.text().replace('Example of ','')
+    icons.push({
+        name,
+        className,
+    })
+})
