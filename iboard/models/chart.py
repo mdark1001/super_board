@@ -149,6 +149,12 @@ class iChart(models.Model):
         required=True,
         default=lambda self: self.env.ref('iboard.palette_1')
     )
+    color_id = fields.Many2one(
+        comodel_name='iboard.config.color',
+        string='Color',
+        required=False,
+        domain="[('palette_id','=',palette_id)]"
+    )
     config = fields.Text(
         string='Chart Config',
         required=False
@@ -218,8 +224,10 @@ class iChart(models.Model):
     def get_preview_chart_data(self):
         cb = ChartBuilder(self.env)
         for record in self:
-            cb.set_chart(record)
-            record.preview = cb.get_data().to_json()
+            record.preview = "[]"
+            if record.id:
+                cb.set_chart(record)
+                record.preview = cb.get_data().to_json()
 
     @api.model
     def create(self, values):

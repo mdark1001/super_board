@@ -147,7 +147,6 @@ export class iBoardAction extends Component {
      * Call services
      * */
     callGetChartsFromDashboard() {
-        console.log(BOARD_MODEL);
         return this.orm.call(
             BOARD_MODEL,
             'get_charts',

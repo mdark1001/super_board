@@ -18,11 +18,11 @@ class iBoardFieldIcon extends Component {
 
     setup() {
         super.setup();
-        console.log(this.props);
         this.state = useState({
             icon: this.props.value,
             showModal: false,
-            icons: ICONS
+            icons: ICONS,
+            color: this.props.record.data?.color_id[1] || "#000000"
         })
 
     }

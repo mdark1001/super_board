@@ -7,8 +7,6 @@ export class Title extends iBoardBase {
     constructor(element, chart, colors) {
         super(chart, colors);
         this.el = d3.select(element.el)
-
-        console.log(this.el);
     }
 
     draw() {
@@ -39,9 +37,9 @@ export class Title extends iBoardBase {
 
     getIcon() {
         if (this.data.set_icon) {
-            return `  <div class="col-2 text-left pl-0" style="font-size: 60px">
+            return `  <div class="col-2 text-left pl-0" style="font-size: 60px; ">
                                 <i  class="fa ${this.data.icon}"
-                                    style="color: ${this.colors[0]}">
+                                    style="color: ${this.data.color_id?.color || "#000000"}">
                                     </i>
                             </div>`
         }

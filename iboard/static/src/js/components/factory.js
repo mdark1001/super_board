@@ -16,7 +16,6 @@ export class FactoryChart extends Component {
     _factory = {}
 
     setup() {
-        console.log(this.props);
         this.actionService = useService("action");
         this.element = useRef('element')
         onMounted(this.mounted)
@@ -29,7 +28,7 @@ export class FactoryChart extends Component {
     }
 
     redraw(nextPros) {
-        console.log(":::props updated::::")
+        console.log(this);
         this.props = nextPros
         this._factory.redraw(this.props)
     }

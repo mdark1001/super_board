@@ -12,7 +12,7 @@
     </t>
     <t t-name="iBoardFieldIcon" owl="1">
         <div class="">
-            <span class="">
+            <span t-attf-style="color:{{ state.color}}">
                 <i
                         t-on-click="(ev)=>this.changeModalState(ev)"
                         t-attf-class="fa-3x fa {{ state.icon }}"/>

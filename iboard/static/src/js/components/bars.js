@@ -2,10 +2,18 @@
 
 import {iBoardBase} from "./base";
 
+function calculateContainerWidth() {
+    // You can adjust this logic as needed based on your layout
+    const maxWidth = document.documentElement.clientWidth - 30; // Subtracting 20px for some padding or margin
+    const containerWidth = Math.min(maxWidth, 600); // Limit to a maximum width if needed
+    return containerWidth;
+}
+
 export class Bars extends iBoardBase {
     constructor(element, data, colors) {
         super(data, colors);
         this.el = element.el
+        this.setParentWidth()
         this.chartSelextor = d3.select(this.el)
             .append("canvas")
             .attr("id", "canvas_" + this.data.id)
@@ -54,6 +62,11 @@ export class Bars extends iBoardBase {
             config['indexAxis'] = 'y'
         }
         return config
+    }
+
+    setParentWidth() {
+        let _width = calculateContainerWidth()
+        this.data.config.width = _width + "px"
     }
 
 }

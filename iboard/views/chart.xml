@@ -84,6 +84,9 @@
                             <page name="page_appearance" string="Estilo">
                                 <group>
                                     <field name="palette_id"/>
+                                    <field name="color_id"
+                                           attrs="{'invisible':[('chart_type','not in',('title',))]}"
+                                    />
                                     <field name="bar_orientation"
                                            attrs="{'invisible':[('chart_type','not in',('bar',))]}"/>
                                     <field name="stacked"

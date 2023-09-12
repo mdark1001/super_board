@@ -98,9 +98,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-12 ml-1" t-attf-id="chart_body_{{props.chart.id}}">
-                </div>
-                    <div class="w-100"
+                    <div class=""
                          t-attf-id="content_{{props.chart.id}}"
                          t-ref="element"
                     >
