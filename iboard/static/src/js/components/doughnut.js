@@ -9,15 +9,15 @@ export class Doughnut extends iBoardBase {
     constructor(element, data, colors) {
         super(data, colors);
         this.el = element.el
+    }
+
+    draw() {
+        super.draw();
         this.chartSelextor = d3.select(this.el)
             .append("canvas")
             .attr("id", "canvas_" + this.data.id)
             .attr("width", this.getWidth())
             .attr("height", this.getHeight())
-    }
-
-    draw() {
-        super.draw();
         const data = this.getDataChart()
 
         const ctx = document.getElementById("canvas_" + this.data.id);
@@ -33,11 +33,15 @@ export class Doughnut extends iBoardBase {
 
     }
 
-    redraw(data,) {
-        super.redraw(data);
-        d3.select("#canvas_" + this.data.id).html('')
-        this.draw()
+
+
+    resizeChart() {
+        this.chartObj.canvas.width = this.getWidth()
+        this.chartObj.canvas.height = this.getHeight() * .7
+        this.chartObj.resize()
     }
+
+
 
     getDataChart() {
         let {datasets, labels} = super.getDataChart()

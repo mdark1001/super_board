@@ -4,13 +4,13 @@
 * */
 
 
-const {Component, onMounted, useRef, onWillUpdateProps} = owl;
+const {Component, onMounted, onWillRender, onPatched, useRef, onWillUpdateProps} = owl;
 import {useService} from "@web/core/utils/hooks";
 import {Title} from "./title";
 import {Doughnut} from "./doughnut";
 import {Bars} from "./bars";
 import {TreeMap} from "./tree-map";
-import { Maps} from './maps.js'
+import {Maps} from './maps.js'
 
 export class FactoryChart extends Component {
     _factory = {}
@@ -19,18 +19,29 @@ export class FactoryChart extends Component {
         this.actionService = useService("action");
         this.element = useRef('element')
         onMounted(this.mounted)
-        onWillUpdateProps(this.redraw)
+        onPatched(this.onPatched)
+        owl.useExternalListener(window, "resize",this.resizeChart.bind(this));
+
+    }
+
+    willStart() {
     }
 
     mounted() {
         this.setChartConfig()
-        this.draw()
+        setTimeout(this.draw.bind(this), 1)
     }
 
     redraw(nextPros) {
-        console.log(this);
         this.props = nextPros
         this._factory.redraw(this.props)
+    }
+    resizeChart(){
+         this._factory.resizeChart()
+    }
+
+    onPatched() {
+        console.log("Pathed:::::::::::::")
     }
 
     setChartConfig() {
@@ -69,7 +80,11 @@ export class FactoryChart extends Component {
     }
 
     draw() {
-        this._factory.draw()
+        return new Promise((resolve, reject) => {
+            this._factory.draw()
+            resolve()
+        })
+
     }
 
     editChart(ev) {

@@ -98,12 +98,13 @@ export class iBoardBase {
         return []
     }
 
+
     getWidth() {
-        return parseInt(this.data.config.width) * this._factorDeviceSize
+        return this.el.closest("div.grid-stack-item").clientWidth * .9
     }
 
     getHeight() {
-        return parseInt(this.data.config.height) * this._factorDeviceSize
+        return this.el.closest("div.grid-stack-item").clientHeight * .8
     }
 
     orderDatasets(datasets, labels) {
